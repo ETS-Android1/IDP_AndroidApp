@@ -83,3 +83,6 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+/HooKa_InstructorWeb/nbproject/private/
+/HooKa_ConstructorWeb/nbproject/private/
+/HooKa_Web/nbproject/private/
