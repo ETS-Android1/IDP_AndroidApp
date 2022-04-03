@@ -50,8 +50,8 @@
         </div>
         <form class="formborder" name="customer" action="authenticate" method="post">
             <div class="container">
-                <label for="email"><b>Email</b></label><br/>
-                <input type="email" placeholder="Enter Email" name="email" required><br/>
+                <label for="mobile"><b>Mobile Number</b></label><br/>
+                <input type="mobile" placeholder="Enter mobile" name="mobile" required><br/>
                 
                 <label for="password"><b>Password</b></label><br/>
                 <input type="password" placeholder="Enter Password" name="password" required><br/>
