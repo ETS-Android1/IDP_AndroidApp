@@ -67,7 +67,7 @@ public class AuthenticationServlet extends HttpServlet{
                 try {
 
                     connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/shoeshop?allowPublicKeyRetrieval=true&serverTimezone=UTC",
+                        "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                         "root", "xxxx");
                     
                     preparedStatement = connection.prepareStatement("SELECT * FROM customer WHERE email = ?");
@@ -79,14 +79,10 @@ public class AuthenticationServlet extends HttpServlet{
                     
                     if(customerPassword.equals(hexPassword.toString()))
                     {
-                        Customer customer = new Customer();
+                        User customer = new User();
                 
                         customer.setId(resultset.getInt("customerId"));
                         customer.setFullName(resultset.getString("fullname"));
-                        customer.setEmail(resultset.getString("email"));
-                        customer.setAddress1(resultset.getString("addressline1"));
-                        customer.setAddress2(resultset.getString("addressline2"));
-                        customer.setPostalCode(resultset.getString("postalcode"));
                         customer.setMobile(resultset.getString("mobile"));
 
                         session.setAttribute("customer",customer);

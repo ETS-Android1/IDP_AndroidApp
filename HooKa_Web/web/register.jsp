@@ -42,7 +42,7 @@
             <% } %>
         </div>
         <br/><br/><br/>
-        <h1>Registration Form</h1>
+        <h1>Instructor Registration</h1>
         <div style="text-align: center">
                 <font color="red">
                         <%=request.getAttribute("message")==null?"":request.getAttribute("message")%><br/>
@@ -54,16 +54,6 @@
             <div class="container">
                 <label for="fullName"><b>Full Name</b></label><br/>
                 <input type="text" placeholder="Enter Full Name" name="fullName" required><br/>
-                
-                <label for="email"><b>Email</b></label><br/>
-                <input type="email" placeholder="Enter Email" name="email" required><br/>
-                
-                <label for="address1"><b>Address</b></label><br/>
-                <input type="text" placeholder="Enter Address Line 1" name="address1" required><br/>
-                <input type="text" placeholder="Enter Address Line 2" name="address2" required><br/>
-                
-                <label for="postalCode"><b>Postal Code</b></label><br/>
-                <input type="text" placeholder="Enter Postal Code" name="postalCode" required><br/>
                 
                 <label for="mobile"><b>Mobile Number</b></label><br/>
                 <input type="text" placeholder="Enter Mobile Number" name="mobile" required><br/>

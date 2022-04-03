@@ -42,14 +42,14 @@ public class ViewProfileServlet extends HttpServlet{
             HttpSession session = request.getSession();
             
             //retrieve customerId from session Customer
-            Customer c = (Customer) session.getAttribute("customer");
+            User c = (User) session.getAttribute("customer");
             int customerId = c.getId();
             
             try {
             
             // Get the connection from the DataSource
             connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/shoeshop?allowPublicKeyRetrieval=true&serverTimezone=UTC",
+                        "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                         "root", "xxxx");
             //Set auto commit to false to control the transaction
             connection.setAutoCommit(false);

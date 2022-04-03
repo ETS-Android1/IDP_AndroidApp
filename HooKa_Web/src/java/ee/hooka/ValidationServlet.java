@@ -50,9 +50,9 @@ public class ValidationServlet extends HttpServlet{
             try {
                 //Get the connection, prepare the statement and run the query
                 connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/shoeshop?allowPublicKeyRetrieval=true&serverTimezone=UTC",
+                        "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                         "root", "xxxx");
-                preparedStatement = connection.prepareStatement("SELECT count(*) FROM customer WHERE email = ?");
+                preparedStatement = connection.prepareStatement("SELECT count(*) FROM user WHERE email = ?");
                 preparedStatement.setString(1, email);
                 resultset = preparedStatement.executeQuery();
                 

@@ -50,6 +50,7 @@ DROP TABLE IF EXISTS `session`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `session` (
   `sessionId` int(11) NOT NULL AUTO_INCREMENT,
+  `sessionPin` int(6) NOT NULL,
   `userId` int(11) NOT NULL,
   `sessionRunningStatus` BOOLEAN DEFAULT 0 NOT NULL,
   PRIMARY KEY (`sessionId`),
@@ -65,7 +66,7 @@ CREATE TABLE `session` (
 LOCK TABLES `session` WRITE;
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
 INSERT INTO `session` (`userId`, `sessionRunningStatus`) 
-					VALUES (1, 'f');
+					VALUES (1, 0);
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

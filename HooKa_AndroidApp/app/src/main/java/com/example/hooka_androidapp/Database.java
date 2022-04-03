@@ -2,54 +2,99 @@ package com.example.hooka_androidapp;
 
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
-public class Database {
+import javax.net.ssl.HttpsURLConnection;
 
-    String res = "";
+public class Database extends AsyncTask<String, String, String> {
 
-    private static final String url = "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC";
-    private static final String user = "root";
-    private static final String pass = "xxxx";
+    String myUrl = "http://localhost:3000/users";
 
-    public Database(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, user, pass);
-            System.out.println("Database Connection successsssssssss");
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // display a progress dialog to show the user what is happening
+    }
 
-//            String result = "Database Connection Successful\n";
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("select distinct fullname from user");
-//            ResultSetMetaData rsmd = rs.getMetaData();
-//
-//            while (rs.next()) {
-//                result += rs.getString(1).toString() + "\n";
-//            }
-//            res = result;
-        } catch (Exception e) {
-            System.out.println("eeeeerrroooorrrr");
-            e.printStackTrace();
-            res = e.toString();
-            System.out.println(res);
+        @Override
+        protected String doInBackground(String... params) {
+// Fetch data from the API in the background.
+
+            String result = "";
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(myUrl);
+                    //open a URL coonnection
+
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+
+                    InputStreamReader isw = new InputStreamReader(in);
+
+                    int data = isw.read();
+
+                    while (data != -1) {
+                        result += (char) data;
+                        data = isw.read();
+
+                    }
+
+                    // return the data to onPostExecute method
+                    return result;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return result;
         }
-        //return res;
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+
+                JSONObject jsonObject = new JSONObject(s);
+
+                JSONArray jsonArray1 = jsonObject.getJSONArray("users");
+
+                JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
+                String id = jsonObject1.getString("id");
+                String name = jsonObject1.getString("name");
+                String my_users = "User ID: "+id+"\n"+"Name: "+name;
+
+                //Show the Textview after fetching data
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
 }
-
-    //----------------------------------------USERS--------------------------------------------------
-
-    // ---insert
-//    public void insertUser(String username, String email, String password) {
-//        String sqlStmt = "Insert into " + TABLE_USERS + " (" + USERS_USERNAME + "," + USERS_EMAIL + "," + USERS_PASSWORD + "," + USERS_BALANCE + ") " +
-//                "VALUES ('" + username + "','" + email + "','" + password + "','" + 0.00
-//                + "')";
-//        db.execSQL(sqlStmt);
-//    }// insert
 
 

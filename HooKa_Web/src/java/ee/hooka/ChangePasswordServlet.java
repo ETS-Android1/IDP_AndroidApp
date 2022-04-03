@@ -45,7 +45,7 @@ public class ChangePasswordServlet extends HttpServlet{
             
             HttpSession session = request.getSession();
             
-            Customer customer = (Customer) session.getAttribute("customer");
+            User customer = (User) session.getAttribute("customer");
             
             String currentPassword = request.getParameter("currentPassword");
             String newPassword = request.getParameter("newPassword");
@@ -73,7 +73,7 @@ public class ChangePasswordServlet extends HttpServlet{
             try {
 
                     connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/shoeshop?allowPublicKeyRetrieval=true&serverTimezone=UTC",
+                        "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                         "root", "xxxx");
                     connection.setAutoCommit(false);
                     
