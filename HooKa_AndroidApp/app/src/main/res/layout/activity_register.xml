@@ -34,14 +34,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_emailTB" />
+        app:layout_constraintTop_toBottomOf="@+id/reg_mobileTB" />
 
     <EditText
-        android:id="@+id/reg_emailTB"
+        android:id="@+id/reg_mobileTB"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:hint="Enter email"
+        android:hint="Enter mobile number"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -96,9 +96,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
-        app:layout_constraintBottom_toTopOf="@+id/reg_emailTB"
-        app:layout_constraintStart_toStartOf="@+id/reg_emailTB" />
+        android:text="Mobile Number"
+        app:layout_constraintBottom_toTopOf="@+id/reg_mobileTB"
+        app:layout_constraintStart_toStartOf="@+id/reg_mobileTB" />
 
     <EditText
         android:id="@+id/reg_confirmPasswordTB"
