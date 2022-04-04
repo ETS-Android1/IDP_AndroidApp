@@ -26,6 +26,7 @@ CREATE TABLE `user` (
   `fullname` varchar(128) NOT NULL,
   `mobile` varchar(8) NOT NULL,
   `password` varchar(128) NOT NULL,
+  `joinedSession` int(11) NULL,
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
