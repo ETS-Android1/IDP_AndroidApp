@@ -86,3 +86,6 @@ lint/tmp/
 /HooKa_InstructorWeb/nbproject/private/
 /HooKa_ConstructorWeb/nbproject/private/
 /HooKa_Web/nbproject/private/
+
+**/node_modules
+**/bin
