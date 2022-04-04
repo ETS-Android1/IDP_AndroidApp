@@ -21,6 +21,7 @@ public class User implements Serializable{
     private String fullName;
     private String mobile;
     private String password;
+    private int joinedSession;
 
     public User() {
     }
@@ -63,6 +64,14 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getJoinedSession() {
+        return joinedSession;
+    }
+
+    public void setJoinedSession(int joinedSession) {
+        this.joinedSession = joinedSession;
     }
 
     

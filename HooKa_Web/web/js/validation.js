@@ -14,14 +14,6 @@ function validateForm() {
         return false;
     }
     
-    var p = "^[0-9]{6}$";
-    var postal = document.forms["customer"]["postalCode"].value;
-    var match = postal.match(p);
-    if(match === null) {
-        alert("Please enter a valid postal code (6 digits)");
-        return false;
-    }
-    
     var p1 = document.forms["customer"]["password"].value;
     var p2 = document.forms["customer"]["confirmPassword"].value;
     if(p1 !== p2) {

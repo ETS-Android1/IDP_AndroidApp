@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 
 /* join session. */
-router.get('/list', function(req, res, next) {
+router.get('/join', function(req, res, next) {
 
     let inputPin = req.body.userType
 
@@ -20,3 +20,5 @@ router.get('/list', function(req, res, next) {
       });
     })
   });
+
+  module.exports = router;

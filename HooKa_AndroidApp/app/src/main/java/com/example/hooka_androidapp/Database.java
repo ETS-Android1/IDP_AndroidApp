@@ -1,6 +1,7 @@
 package com.example.hooka_androidapp;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +23,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Database extends AsyncTask<String, String, String> {
 
-    String myUrl = "http://localhost:3000/users";
+    String myUrl = "https://localhost:3000/users";
 
     @Override
     protected void onPreExecute() {
@@ -40,7 +41,7 @@ public class Database extends AsyncTask<String, String, String> {
                 HttpURLConnection urlConnection = null;
                 try {
                     url = new URL(myUrl);
-                    //open a URL coonnection
+                    //open a URL connection
 
                     urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -71,28 +72,29 @@ public class Database extends AsyncTask<String, String, String> {
                 e.printStackTrace();
                 return "Exception: " + e.getMessage();
             }
+            System.out.println(result);
             return result;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            try {
-
-                JSONObject jsonObject = new JSONObject(s);
-
-                JSONArray jsonArray1 = jsonObject.getJSONArray("users");
-
-                JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
-                String id = jsonObject1.getString("id");
-                String name = jsonObject1.getString("name");
-                String my_users = "User ID: "+id+"\n"+"Name: "+name;
-
-                //Show the Textview after fetching data
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//
+//                JSONObject jsonObject = new JSONObject(s);
+//
+//                JSONArray jsonArray1 = jsonObject.getJSONArray("users");
+//
+//                JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
+//                String id = jsonObject1.getString("userId");
+//                String name = jsonObject1.getString("fullName");
+//                String my_users = "User ID: "+id+"\n"+"Name: "+name;
+//
+//                //Show the Textview after fetching data
+//                Toast.makeText(MainActivity.getApplicationContext(), my_users, Toast.LENGTH_SHORT).show();
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
         }
 
 }
