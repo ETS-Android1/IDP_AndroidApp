@@ -34,13 +34,9 @@ public class ValidationServlet extends HttpServlet{
                 HttpServletResponse response)
                 throws ServletException, IOException {
             
-            String email = request.getParameter("email");
-            EmailValidator emailValidator;
-            emailValidator = EmailValidator.getInstance();
-        
-            if(emailValidator.isValid(email)) {
+            String mobile = request.getParameter("mobile");
                 
-                boolean unique = true;
+            boolean unique = true;
             
             //Declare connection, preparedstatement and resultset
             Connection connection = null;
@@ -52,8 +48,8 @@ public class ValidationServlet extends HttpServlet{
                 connection = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                         "root", "xxxx");
-                preparedStatement = connection.prepareStatement("SELECT count(*) FROM user WHERE email = ?");
-                preparedStatement.setString(1, email);
+                preparedStatement = connection.prepareStatement("SELECT count(*) FROM user WHERE mobile = ?");
+                preparedStatement.setString(1, mobile);
                 resultset = preparedStatement.executeQuery();
                 
                 //The SQL query will definitely yield one single row of result.
@@ -104,23 +100,13 @@ public class ValidationServlet extends HttpServlet{
                 } else {
                     //else (ie. the book has been added before, return to add.jsp)
                     request.setAttribute("message", 
-                                    "The email, \"" 
-                                    + request.getParameter("email") 
+                                    "The mobile number, \"" 
+                                    + request.getParameter("mobile") 
                                     + "\", has already been registered.");
                     RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
                     rd.forward(request, response);
                 }
             }
                 
-            }else{
-                request
-                   .setAttribute("message",
-                    "Email entered is not valid");
-                
-                RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
-                rd.forward(request, response);
-            }
-            
         }
-    
 }

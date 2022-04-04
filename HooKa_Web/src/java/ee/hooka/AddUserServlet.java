@@ -39,10 +39,6 @@ public class AddUserServlet extends HttpServlet{
                 throws ServletException, IOException {
             
             String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String address1 = request.getParameter("address1");
-            String address2 = request.getParameter("address2");
-            String postalCode = request.getParameter("postalCode");
             String mobile = request.getParameter("mobile");
             String password = request.getParameter("password");
             
@@ -60,14 +56,7 @@ public class AddUserServlet extends HttpServlet{
             // Convert message digest into hex value  
             hexPassword = new StringBuilder(number.toString(16));
             
-            String sqlInsertUserFirstHalf = "INSERT INTO customer (fullname, email, addressline1, postalcode, mobile, password";
-            String sqlInsertUserSecondHalf = "VALUES (?, ?, ?, ?, ?, ?";
-            if(address2 != null && !address2.isEmpty()) {
-                sqlInsertUserFirstHalf += ", addressline2";
-                sqlInsertUserSecondHalf += ", ?";
-            }
-            sqlInsertUserFirstHalf += ") ";
-            sqlInsertUserSecondHalf += ")";
+            String sqlInsertUser = "INSERT INTO user (userType, fullName, mobile, password) VALUES(?, ?, ?, ?)";
 
            //Declare the connection, prepared statement and resultset objects
             Connection connection = null;
@@ -83,36 +72,31 @@ public class AddUserServlet extends HttpServlet{
             //Set auto commit to false to control the transaction
             connection.setAutoCommit(false);
             // Create a statement using the Connection
-            preparedStatement = connection.prepareStatement(sqlInsertUserFirstHalf + sqlInsertUserSecondHalf);
+            preparedStatement = connection.prepareStatement(sqlInsertUser);
             
-            preparedStatement.setString(1, fullName);
-            preparedStatement.setString(2, email);
-            preparedStatement.setString(3, address1);
-            preparedStatement.setString(4, postalCode);
-            preparedStatement.setString(5, mobile);
-            preparedStatement.setString(6, hexPassword.toString());
-            
-            
-            if(address2 != null && !address2.isEmpty())
-                preparedStatement.setString(7, address2);
+            preparedStatement.setString(1, "Intructor");
+            preparedStatement.setString(2, fullName);
+            preparedStatement.setString(3, mobile);
+            preparedStatement.setString(4, hexPassword.toString());
             
             preparedStatement.executeUpdate();
             connection.commit();
             
             //"login after registering"
-            preparedStatement = connection.prepareStatement("SELECT * FROM customer WHERE email = ?");
-            preparedStatement.setString(1, email);
+            preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE mobile = ?");
+            preparedStatement.setString(1, mobile);
             resultset = preparedStatement.executeQuery();
             
             resultset.next();
-            User customer = new User();
+            User user = new User();
                 
-                customer.setId(resultset.getInt("customerId"));
-                customer.setFullName(resultset.getString("fullname"));
-                customer.setMobile(resultset.getString("mobile"));
+                user.setId(resultset.getInt("userId"));
+                user.setFullName(resultset.getString("fullName"));
+                user.setMobile(resultset.getString("mobile"));
+                user.setMobile(resultset.getString("joinedSession"));
             
             HttpSession session = request.getSession();
-            session.setAttribute("customer",customer);
+            session.setAttribute("customer",user);
             
             response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
             
