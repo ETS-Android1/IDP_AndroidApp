@@ -162,10 +162,10 @@ CREATE TABLE `response` (
   `points` int(11) NULL,
   PRIMARY KEY (`responseId`),
   KEY `QnId_idx` (`qnId`),
-  KEY `UserId_idx` (`userId`),
+  KEY `ResponseUserId_idx` (`userId`),
   KEY `SessionId_idx` (`sessionId`),
   CONSTRAINT `QnIdResponse` FOREIGN KEY (`qnId`) REFERENCES `questions` (`qnId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `UserId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ResponseUserId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `SessionIdResponse` FOREIGN KEY (`sessionId`) REFERENCES `session` (`sessionId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
