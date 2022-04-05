@@ -11,11 +11,15 @@ import android.content.Intent;
 
 public class LoadingActivity extends AppCompatActivity {
 
+    private TextView loadingTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-        //findViewById(R.id.loadingPanel).setVisibility(View.GONE); /*to stop loading animation*/
+        loadingTxt = (TextView) findViewById(R.id.loadingTxt);
+
+
     }
 }

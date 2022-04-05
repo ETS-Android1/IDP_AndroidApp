@@ -13,10 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HooKa_AndroidApp"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".StudentResultActivity" />
-        <activity
-            android:name=".LoadingActivity" />
+        <activity android:name=".StudentResultActivity" />
+        <activity android:name=".LoadingActivity"
+            android:exported="true"/>
         <activity android:name=".OptionsActivity" />
         <activity android:name=".Register" />
         <activity android:name=".MainActivity" />

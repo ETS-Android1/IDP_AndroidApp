@@ -14,7 +14,7 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        txtTimer = (TextView)  findViewById(R.id.txtTimer);
+        txtTimer = (TextView) findViewById(R.id.txtTimer);
         // Count down from 30 sec. onTick() every second. Values in milliseconds
         new CountDownTimer(30000, 1000) {
             public void onTick(long millisRemaining) {

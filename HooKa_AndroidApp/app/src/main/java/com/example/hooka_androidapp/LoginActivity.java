@@ -98,12 +98,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void loginBttn(View view) {
-        // Create an Intent to start the second activity
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
-        // Start the intended activity
-        startActivity(intent);
-    }
 }

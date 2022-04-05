@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void enterSessionBttn(View view) {
         // Create an Intent to start the second activity
-        Intent intent = new Intent(MainActivity.this, OptionsActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoadingActivity.class);
 
         // Start the intended activity
         startActivity(intent);

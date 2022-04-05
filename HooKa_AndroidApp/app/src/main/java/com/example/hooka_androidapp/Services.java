@@ -23,8 +23,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 
 public class Services {
-    static String baseURL = "http://192.168.72.217:3000"; /*ZY*/
-    //static String baseURL = "http://10.27.123.194:3000"; /*ZH*/
+    //static String baseURL = "http://192.168.72.217:3000"; /*ZY*/
+    static String baseURL = "http://192.168.1.246:3000"; /*ZH*/
 
 
     /* -------------------------------------USER FUNCTIONS------------------------------------- */
@@ -115,7 +115,25 @@ public class Services {
             return false;
         }
     }
+/*
+    public static boolean joinSession(int userID, int sessionPin) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 
+            //String body =
+            String apiPath = "sessions/join";
+            String result = callPost(apiPath, body);
+
+            Map<String,Object> map = mapper.readValue(result, Map.class);
+            String status = map.get("status").toString();
+            return status.equals("success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+*/
     /* -------------------------------------BASE FUNCTIONS------------------------------------- */
 
     // this is the base function to call the GET API based on path
