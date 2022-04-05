@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.annotation.Resource;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -55,13 +56,13 @@ public class SearchSessionsServlet extends HttpServlet{
             
                     // Get the connection from the DataSource
                     connection = DriverManager.getConnection(
-                                "jdbc:mysql://localhost:3306/shoeshop?allowPublicKeyRetrieval=true&serverTimezone=UTC",
+                                "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                                 "root", "xxxx");
                     // Create a statement using the Connection
                     statement = connection.prepareStatement(sqlSelect);
 
                     statement.setString(1, "%" + searchterm + "%");
-                    statement.setInt(1,userId);
+                    statement.setInt(2,userId);
                     
                     // Make a query to the DB using ResultSet through the Statement
                     resultset = statement.executeQuery();
@@ -79,7 +80,7 @@ public class SearchSessionsServlet extends HttpServlet{
                         results.add(session);
                     }
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(SearchSessionsServlet.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
             System.err.println(ex.getMessage());
@@ -114,10 +115,12 @@ public class SearchSessionsServlet extends HttpServlet{
                 try {
             
             connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/shoeshop?allowPublicKeyRetrieval=true&serverTimezone=UTC",
+                        "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                         "root", "xxxx");
-            sqlSelect = "SELECT * FROM shoes";
+            sqlSelect = "SELECT * FROM session WHERE userId = ?";
             statement = connection.prepareStatement(sqlSelect);
+            statement.setInt(1,userId);
+            
             resultset = statement.executeQuery();
             
             //resultset is like a pointer
@@ -166,8 +169,8 @@ public class SearchSessionsServlet extends HttpServlet{
             
             HttpSession session = request.getSession();
             session.setAttribute("searchresult", (Object) results);
-            response.sendRedirect(this.getServletContext().getContextPath() + "/products.jsp");
-            
+            response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
+
         }
     
     

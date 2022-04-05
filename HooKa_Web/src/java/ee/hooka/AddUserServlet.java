@@ -96,7 +96,7 @@ public class AddUserServlet extends HttpServlet{
                 user.setMobile(resultset.getString("joinedSession"));
             
             HttpSession session = request.getSession();
-            session.setAttribute("customer",user);
+            session.setAttribute("user",user);
             
             ///response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
             RequestDispatcher rd = request.getRequestDispatcher("/search");

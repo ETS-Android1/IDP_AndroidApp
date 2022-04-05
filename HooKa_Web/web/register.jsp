@@ -1,4 +1,4 @@
-<%@page import="ee.hooka.Customer"%>
+<%@page import="ee.hooka.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
