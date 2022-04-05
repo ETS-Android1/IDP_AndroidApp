@@ -26,8 +26,10 @@ router.post('/create', function(req, res) {
   let fullname = req.body.fullname
   let mobile = req.body.mobile
   let password = req.body.password
+  let joinedSession = 0;
 
-  let sql = `insert into user (userType, fullname, mobile, password) values ('${userType}', '${fullname}', '${mobile}', '${password}')`
+
+  let sql = `insert into user (userType, fullname, mobile, password, joinedSession) values ('${userType}', '${fullname}', '${mobile}', '${password}', '${joinedSession}')`
   console.log(sql)
 
   connection.query(sql, (err, data, fields) => {
