@@ -48,6 +48,15 @@ public class Register extends AppCompatActivity {
                         //insert user into db
                         createSuccessful = Services.createUser("Student", fullname, mobile, password);
 
+                        if (!createSuccessful) {
+                            String temp = "";
+                            temp += "Confirm Password is wrong."+ "\n";
+                            temp += "Please try again";
+
+                            Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                     } catch (Exception e) {
                         Log.d(TAG, e.getMessage());
                     } finally {

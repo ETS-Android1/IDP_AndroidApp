@@ -1,5 +1,7 @@
 package com.example.hooka_androidapp;
 
+import android.os.StrictMode;
+
 import com.example.hooka_androidapp.models.User;
 
 import java.io.BufferedReader;
@@ -21,8 +23,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 
 public class Services {
-    //static String baseURL = "http://192.168.50.215:3000"; /*ZY*/
-    static String baseURL = "http://10.27.123.194:3000"; /*ZH*/
+    static String baseURL = "http://192.168.72.217:3000"; /*ZY*/
+    //static String baseURL = "http://10.27.123.194:3000"; /*ZH*/
 
 
     /* -------------------------------------USER FUNCTIONS------------------------------------- */
@@ -118,6 +120,9 @@ public class Services {
 
     // this is the base function to call the GET API based on path
     private static String callGet(String apiPath) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         String fullURL = String.format("%s/%s", baseURL, apiPath);
 
         String result = "";
@@ -162,6 +167,9 @@ public class Services {
 
     // this is the base function to call the POST API based on path
     private static String callPost(String apiPath, String data) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         String fullURL = String.format("%s/%s", baseURL, apiPath);
 
         String result = "";

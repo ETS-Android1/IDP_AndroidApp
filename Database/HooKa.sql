@@ -38,7 +38,7 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`userType`, `fullname`, `mobile`,`password`,`joinedSession`) 
-					VALUES ('Instructor','admin','98765432','3700aa0cb7feaba7b2b4baf8afba0d83140caa244b0fb011ab254ea40ca4fab7',null),
+					VALUES ('Instructor','admin','98765432','3700aa0cb7feaba7b2b4baf8afba0d83140caa244b0fb011ab254ea40ca4fab7',0),
                   ('Student','Amy','91234567','password',1),
                   ('Student','Mark','91234567','password',1),
                   ('Student','Helly','91234567','password',1),
