@@ -11,7 +11,7 @@
     </head>
     <body>
         <% 
-                Customer c = (Customer) session.getAttribute("customer");
+                User c = (User) session.getAttribute("user");
             %>
         
         <div class="navbar">
@@ -24,7 +24,7 @@
 
                 <% }else{ %>
 
-                <form class="navForm" action="search" method="post" style="float: left">
+<!--                <form class="navForm" action="search" method="post" style="float: left">
                     <input type="submit" value="Products"/>
                 </form>
                 <form class="navForm" action="cart" method="get" style="float: left">
@@ -32,7 +32,7 @@
                 </form> 
                 <form class="navForm" action="profile" method="get" style="float: left">
                     <input type="submit" value="Profile"/>
-                </form> 
+                </form> -->
                 <form class="navForm" action="logout" method="post">
                     <input type="submit" value="Logout"/>
                 </form>

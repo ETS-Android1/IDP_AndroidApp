@@ -46,7 +46,7 @@ public class AuthenticationServlet extends HttpServlet{
                 
                 HttpSession session = request.getSession();
                 
-                String email = request.getParameter("email");
+                String mobile = request.getParameter("mobile");
                 String password = request.getParameter("password");
                 
                 StringBuilder hexPassword;
@@ -70,8 +70,8 @@ public class AuthenticationServlet extends HttpServlet{
                         "jdbc:mysql://localhost:3306/hooka?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
                         "root", "xxxx");
                     
-                    preparedStatement = connection.prepareStatement("SELECT * FROM customer WHERE email = ?");
-                    preparedStatement.setString(1, email);
+                    preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE mobile = ?");
+                    preparedStatement.setString(1, mobile);
                     resultset = preparedStatement.executeQuery();
                     
                     resultset.next();

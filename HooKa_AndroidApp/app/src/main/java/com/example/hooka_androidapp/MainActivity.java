@@ -12,8 +12,6 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    String myUrl = "http://localhost:3000/users";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
         Database database = new Database();
         database.execute();
+
+        //
     }
 
 

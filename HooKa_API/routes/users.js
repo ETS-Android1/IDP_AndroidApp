@@ -42,7 +42,7 @@ router.post('/create', function(req, res) {
 });
 
 /* Create a new user. */
-router.delete('/delete', function(req, res) {
+router.post('/delete', function(req, res) {
   console.log(req.body)
 
   let id = req.body.id
@@ -77,7 +77,7 @@ router.post('/login', function(req, res) {
     let isAuthenticated = false
     let userData = null
 
-    if (data?.length == 1) {
+    if (data?.length > 0) {
       isAuthenticated = true
       userData = data[0]
     }

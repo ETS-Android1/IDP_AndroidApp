@@ -3,6 +3,8 @@ package com.example.hooka_androidapp;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.example.hooka_androidapp.models.User;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +25,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class Database extends AsyncTask<String, String, String> {
 
-    String myUrl = "https://localhost:3000/users";
+    String myUrl = "http://192.168.50.215:3000/users/list";
 
     @Override
     protected void onPreExecute() {
@@ -34,6 +36,10 @@ public class Database extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... params) {
 // Fetch data from the API in the background.
+
+            // test delete
+            boolean success = Services.deleteUser(8);
+
 
             String result = "";
             try {
