@@ -5,7 +5,7 @@
     <head>
         <link rel="stylesheet" href="css/master.css">
         <link rel="icon" type="image/png" href="images/ZacZee's-logos_white.png"/> <%--Favicon--%>
-        <title>Login</title>
+        <title>HooKa - Login</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -15,7 +15,7 @@
             %>
         
         <div class="navbar">
-                <a href="index.jsp" ><img src="images/ZacZee's-logo-nav.png" alt="ZacZee's" width="30" Height="30"/></a>
+<!--                <a href="index.jsp" ><img src="images/ZacZee's-logo-nav.png" alt="ZacZee's" width="30" Height="30"/></a>-->
 
                 <% if(c == null){ %>
 

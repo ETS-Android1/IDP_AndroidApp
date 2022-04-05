@@ -98,7 +98,9 @@ public class AddUserServlet extends HttpServlet{
             HttpSession session = request.getSession();
             session.setAttribute("customer",user);
             
-            response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
+            ///response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/search");
+            rd.forward(request, response);
             
         } catch (SQLException ex) {
             

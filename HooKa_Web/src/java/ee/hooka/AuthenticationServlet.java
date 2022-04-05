@@ -75,25 +75,28 @@ public class AuthenticationServlet extends HttpServlet{
                     resultset = preparedStatement.executeQuery();
                     
                     resultset.next();
-                    String customerPassword = resultset.getString("password");
+                    String userPassword = resultset.getString("password");
                     
-                    if(customerPassword.equals(hexPassword.toString()))
+                    if(userPassword.equals(hexPassword.toString()))
                     {
-                        User customer = new User();
+                        User user = new User();
                 
-                        customer.setId(resultset.getInt("customerId"));
-                        customer.setFullName(resultset.getString("fullname"));
-                        customer.setMobile(resultset.getString("mobile"));
+                        user.setId(resultset.getInt("userId"));
+                        user.setFullName(resultset.getString("fullname"));
+                        user.setMobile(resultset.getString("mobile"));
+                        user.setMobile(resultset.getString("joinedSession"));
 
-                        session.setAttribute("customer",customer);
+                        session.setAttribute("user",user);
                         
-                        response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
+                        //response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
+                        RequestDispatcher rd = request.getRequestDispatcher("/search");
+                        rd.forward(request, response);
                     }
                     else
                     {
                         request
                                .setAttribute("message",
-                                "Wrong email or password. Please try again");
+                                "Wrong mobile number or password. Please try again");
                         
                         RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
                         rd.forward(request, response);
