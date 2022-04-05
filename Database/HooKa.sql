@@ -26,7 +26,7 @@ CREATE TABLE `user` (
   `fullname` varchar(128) NOT NULL,
   `mobile` varchar(8) NOT NULL,
   `password` varchar(128) NOT NULL,
-  `joinedSession` int(11) NULL,
+  `joinedSession` int(11) NOT NULL,
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,8 +37,14 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`userType`, `fullname`, `mobile`,`password`) 
-					VALUES ('Instructor','admin','98765432','admin');
+INSERT INTO `user` (`userType`, `fullname`, `mobile`,`password`,`joinedSession`) 
+					VALUES ('Instructor','admin','98765432','3700aa0cb7feaba7b2b4baf8afba0d83140caa244b0fb011ab254ea40ca4fab7',null),
+                  ('Student','Amy','91234567','password',1),
+                  ('Student','Mark','91234567','password',1),
+                  ('Student','Helly','91234567','password',1),
+                  ('Student','Zhao Yi','91234567','password',1),
+                  ('Student','Zhi Hui','91234567','password',1);
+                                                  /* password: chowi */
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

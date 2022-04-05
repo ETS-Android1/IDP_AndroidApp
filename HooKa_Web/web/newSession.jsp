@@ -1,4 +1,4 @@
-<%@page import="ee.hooka.Customer"%>
+<%@page import="ee.hooka.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -54,7 +54,6 @@
             <div class="container">
                 <label for="sessionName"><b>Session Name</b></label><br/>
                 <input type="text" placeholder="Enter Session Name" name="sessionName" required><br/>
-                <input type="hidden" name="productId" value="<%=c.getId()%>"/>
                 
                 <button class="loginRegiBttn" type="submit" value="create">Create</button>
             </div>

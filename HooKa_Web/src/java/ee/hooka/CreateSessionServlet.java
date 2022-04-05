@@ -38,7 +38,7 @@ public class CreateSessionServlet extends HttpServlet{
             User user = (User) reqSession.getAttribute("user");
             int userId = user.getId();
             
-            String sqlInsert = "INSERT INTO session (userId, sessionName, sessionRunningStatus) VALUES(?, ?, ?)";
+            String sqlInsert = "INSERT INTO session (userId, sessionName, sessionPin, sessionRunningStatus) VALUES(?, ?, ?, ?)";
 
            //Declare the connection, prepared statement and resultset objects
             Connection connection = null;
@@ -58,7 +58,8 @@ public class CreateSessionServlet extends HttpServlet{
             
             preparedStatement.setInt(1, userId);
             preparedStatement.setString(2, sessionName);
-            preparedStatement.setInt(3, 0);
+            preparedStatement.setInt(3, -1);
+            preparedStatement.setInt(4, 0);
             
             preparedStatement.executeUpdate();
             connection.commit();
@@ -74,12 +75,12 @@ public class CreateSessionServlet extends HttpServlet{
             newSession.setSessionId(resultset.getInt("sessionId"));
             newSession.setUserId(resultset.getInt("userId"));
             newSession.setSessionName(resultset.getString("sessionName"));
+            newSession.setSessionPin(resultset.getInt("sessionPin"));
                 
             HttpSession session = request.getSession();
-            session.setAttribute("customer",user);
+            session.setAttribute("newSession",newSession);
             
-            ///response.sendRedirect(this.getServletContext().getContextPath() + "/index.jsp");
-            RequestDispatcher rd = request.getRequestDispatcher("/search");
+            RequestDispatcher rd = request.getRequestDispatcher("/edit");
             rd.forward(request, response);
             
         } catch (SQLException ex) {
@@ -88,7 +89,7 @@ public class CreateSessionServlet extends HttpServlet{
                    .setAttribute("message",
                     "An error has occured. Please try again");
             
-            RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/newSession.jsp");
             rd.forward(request, response);
 
             try {

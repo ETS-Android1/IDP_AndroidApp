@@ -1,5 +1,8 @@
 
-<%@page import="ee.hooka.Customer"%>
+<%@page import="ee.hooka.User"%>
+<%@page import="ee.hooka.Session"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -46,12 +49,24 @@
         <br/><br/><br/>
         <div class="display">
             <% if(c == null){ %>
-            <h1>Welcome to HooKa, Login to start!</h1>
+            <h1>Welcome to HooKa, Login to get started!</h1>
 
             <% }else{ %>
             
             <h1><%=c.getFullName()%>'s sessions</h1>
-            <button><a href="newSession.jsp" >+ Create New</a></button>
+            
+            <form action="search" method="Post">
+            <p>
+                <div class="searchField">
+                <input type="text" placeholder="Search by Session Name" name="searchterm"" required>
+                <button class="searchBttn" type="submit" value="Search"/><img icon="search" src="images/search.ico" width="20px" height='20px'/></button><br/>
+                </div>
+            </p>
+            <br/><br/>
+            </form>
+            
+                        <button><a href="newSession.jsp" >+ Create New</a></button>
+
             
             <div style="text-align: center">
                 <font color="red">
@@ -76,11 +91,12 @@
                         <div><%=createdSession.getSessionName()%></div>
                         <div>
                             <form action="editSession" method="post">
-                            <input type="hidden" name="productId" value="<%=session.getSessionId()%>"/>
+                            <input type="hidden" name="sessionId" value="<%=createdSession.getSessionId()%>"/>
                             <input type="submit" value="Edit"/>
                             </form>
-                            <br/><br/>
+                            
                             <form action="startSession" method="post">
+                            <input type="hidden" name="sessionId" value="<%=createdSession.getSessionId()%>"/>
                             <input type="submit" value="Start"/>
                             </form>
                         </div>
