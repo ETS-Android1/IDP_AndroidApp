@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 
 public class Services {
-    static String baseURL = "http://192.168.50.215:3000"; /*ZY*/
-
+    //static String baseURL = "http://192.168.50.215:3000"; /*ZY*/
+    static String baseURL = "http://10.27.123.194:3000"; /*ZH*/
 
 
     /* -------------------------------------USER FUNCTIONS------------------------------------- */

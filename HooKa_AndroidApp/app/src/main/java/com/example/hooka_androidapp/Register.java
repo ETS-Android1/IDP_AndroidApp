@@ -28,8 +28,8 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-//        fullnameTB = findViewById(R.id.reg_fullnameTB);
-//        mobileTB = findViewById(R.id.reg_mobileTB);
+        fullnameTB = findViewById(R.id.reg_usernameTB);
+        mobileTB = findViewById(R.id.reg_mobileTB);
         passwordTB = findViewById(R.id.reg_passwordTB);
         confirmPasswordTB = findViewById(R.id.reg_confirmPasswordTB);
         registerBtn = (Button) findViewById(R.id.reg_registerBTN);
@@ -94,6 +94,19 @@ public class Register extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+        TextView tv=(TextView)findViewById(R.id.LoginRedirect);
+
+        tv.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                // Create an Intent to start the second activity
+                Intent intent = new Intent(Register.this, LoginActivity.class);
+
+                // Start the intended activity
+                startActivity(intent);
             }
         });
 

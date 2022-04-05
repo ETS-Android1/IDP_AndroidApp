@@ -14,20 +14,17 @@
         android:theme="@style/Theme.HooKa_AndroidApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".StudentResultActivity"
-            android:exported="false" />
+            android:name=".StudentResultActivity" />
         <activity
-            android:name=".LoadingActivity"
-            android:exported="false" />
+            android:name=".LoadingActivity" />
         <activity android:name=".OptionsActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".Register" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
