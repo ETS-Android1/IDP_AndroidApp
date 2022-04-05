@@ -52,6 +52,7 @@ DROP TABLE IF EXISTS `session`;
 CREATE TABLE `session` (
   `sessionId` int(11) NOT NULL AUTO_INCREMENT,
   `sessionPin` int(6) NOT NULL,
+  `sessionName` varchar(256) NOT NULL,
   `userId` int(11) NOT NULL,
   `sessionRunningStatus` BOOLEAN DEFAULT 0 NOT NULL,
   PRIMARY KEY (`sessionId`),
@@ -66,8 +67,8 @@ CREATE TABLE `session` (
 
 LOCK TABLES `session` WRITE;
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
-INSERT INTO `session` (`userId`, `sessionRunningStatus`) 
-					VALUES (1, 0);
+INSERT INTO `session` (`sessionName`, `sessionPin`, `userId`, `sessionRunningStatus`) 
+					VALUES ('wazzup', 101010, 1, 0);
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -154,13 +155,17 @@ DROP TABLE IF EXISTS `response`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `response` (
   `responseId` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
   `qnId` int(11) NOT NULL,
   `sessionId` int(11) NOT NULL,
   `choice` varchar(8) NOT NULL,
+  `points` int(11) NULL,
   PRIMARY KEY (`responseId`),
   KEY `QnId_idx` (`qnId`),
+  KEY `UserId_idx` (`userId`),
   KEY `SessionId_idx` (`sessionId`),
   CONSTRAINT `QnIdResponse` FOREIGN KEY (`qnId`) REFERENCES `questions` (`qnId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `UserId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `SessionIdResponse` FOREIGN KEY (`sessionId`) REFERENCES `session` (`sessionId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

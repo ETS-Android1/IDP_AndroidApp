@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HooKa_AndroidApp</string>
+    <string name="RegisterRedirect"><u>Register Now!</u></string>
+    <string name="LoginRedirect"><u>Login Here!</u></string>
+    <string name="TimeLeft"><u>Time Left: </u></string>
+    <string name="TimesUp">Times Up!</string>
 </resources>

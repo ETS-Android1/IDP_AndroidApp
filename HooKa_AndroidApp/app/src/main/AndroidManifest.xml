@@ -3,6 +3,7 @@
     package="com.example.hooka_androidapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -10,11 +11,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.HooKa_AndroidApp">
+        android:theme="@style/Theme.HooKa_AndroidApp"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".OptionsActivity"
+            android:name=".StudentResultActivity"
             android:exported="false" />
+        <activity
+            android:name=".LoadingActivity"
+            android:exported="false" />
+        <activity android:name=".OptionsActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
         <activity
