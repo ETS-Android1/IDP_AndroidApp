@@ -65,7 +65,7 @@
             <br/><br/>
             </form>
             
-                        <button><a href="newSession.jsp" >+ Create New</a></button>
+            <button><a href="newSession.jsp" >+ Create New</a></button>
 
             
             <div style="text-align: center">
@@ -95,7 +95,7 @@
                             <input type="submit" value="Edit"/>
                             </form>
                             
-                            <form action="startSession" method="post">
+                            <form action="storeSession" method="post">
                             <input type="hidden" name="sessionId" value="<%=createdSession.getSessionId()%>"/>
                             <input type="submit" value="Start"/>
                             </form>
@@ -109,7 +109,7 @@
             %>
             </div>
             
-            <% } %>
+            <% }%>
                 
             <!--<div class="displaySub">    
                 <div><h2>New Arrivals</h2></div>

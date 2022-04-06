@@ -1,5 +1,5 @@
 <%-- 
-    Document   : sessionLobby
+    Document   : question
     Created on : 5 Apr 2022, 7:24:30 pm
     Author     : zhaoyiwu
 --%>
@@ -7,6 +7,8 @@
 
 <%@page import="ee.hooka.User"%>
 <%@page import="ee.hooka.Session"%>
+<%@page import="ee.hooka.Question"%>
+<%@page import="ee.hooka.Option"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Timer"%>
 <%@page import="java.util.TimerTask"%>
@@ -61,25 +63,29 @@
 
             <% }else{ 
 
-            List<String> students = (ArrayList<String>) session.getAttribute("students");
+            Question question = (Question) session.getAttribute("questionTobeAired");
+            ArrayList<Option> qnOptions = question.getOptions();
             %>
             
-            <h1>Waiting for students to join</h1>
-            <h1>Current count: <%=students.size()%></h1>
+            <h1>Question <%=question.getQnNumber()%>:</h1>
+            <h1><%=question.getQnDesc%></h1>
             
-            <div class="outergrid">
+            <div>
             <% 
-            if(students == null || students.size() <= 0){
+            if(qnOptions == null || qnOptions.size() <= 0){
             %>
-            <tr><td colspan="5">(No students yet)</td></tr>
+            <tr><td colspan="1">(No options)</td></tr>
             <%
             }else{
-                for(String student:students){
+                for(Option option:qnOptions){
                 %>
                 
-                    <div class="innergrid">
-                            <b><%=student%></b>
-                    </div>
+                <tr>
+                    <td>
+                        
+                        <%=option.getOptionLetter()%>.  <%=option.getOptionDesc()%><br>
+                    </td>
+                </tr>
                 
                 <%
                 }
@@ -89,7 +95,7 @@
             </div>
             
             <div>
-            <form action="retrieveQuestion" method="post">
+            <form action="showQuestion" method="post">
                 <input type="submit" value="Show First Question"/>
             </form>
             </div>

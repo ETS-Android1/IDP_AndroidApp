@@ -90,6 +90,7 @@ DROP TABLE IF EXISTS `questions`;
 CREATE TABLE `questions` (
   `qnId` int(11) NOT NULL AUTO_INCREMENT,
   `sessionId` int(11) NOT NULL,
+  `qnNumber` int(2) NOT NULL,
   `qnDesc` varchar(256) NOT NULL,
   `answer` varchar(8) NOT NULL,
   `accessible` int(2) DEFAULT -1 NOT NULL,
@@ -105,10 +106,10 @@ CREATE TABLE `questions` (
 
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
-INSERT INTO `questions` (`sessionId`, `qnDesc`, `answer`) 
-					VALUES (1,'What is Zhao Yi converse shoe size?','A'),
-						   (1,'How much is Fine Food Duck Rice (Upsize meat and rice)?','C'),
-                           (1,'When is Singapore National Day?','B');
+INSERT INTO `questions` (`sessionId`, `qnNumber`, `qnDesc`, `answer`) 
+					VALUES (1,1,'What is Zhao Yi converse shoe size?','A'),
+						      (1,2,'How much is Fine Food Duck Rice (Upsize meat and rice)?','C'),
+                  (1,3,'When is Singapore National Day?','B');
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
