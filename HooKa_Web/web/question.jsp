@@ -64,7 +64,7 @@
             <% }else{ 
 
             Question question = (Question) session.getAttribute("questionTobeAired");
-            ArrayList<Option> qnOptions = (ArrayList<Option>) question.getOptions();
+            
             %>
             
             <h1>Question <%=question.getQnNumber()%>:</h1>
@@ -72,12 +72,12 @@
             
             <div>
             <% 
-            if(qnOptions == null || qnOptions.size() <= 0){
+            if(question.getOptions() == null || question.getOptions().size() <= 0){
             %>
             <tr><td colspan="1">(No options)</td></tr>
             <%
             }else{
-                for(Option option:qnOptions){
+                for(Option option:question.getOptions()){
                 %>
                 
                 <tr>

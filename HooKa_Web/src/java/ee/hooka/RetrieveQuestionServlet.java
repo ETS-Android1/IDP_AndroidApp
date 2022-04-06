@@ -163,6 +163,7 @@ public class RetrieveQuestionServlet extends HttpServlet{
 
         }
 
+        System.out.println(question);
         //redirect to qn page
         session.setAttribute("questionToBeAired", (Question) question);
         response.sendRedirect(this.getServletContext().getContextPath() + "/question.jsp");

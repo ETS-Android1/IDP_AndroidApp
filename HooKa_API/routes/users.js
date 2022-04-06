@@ -3,7 +3,7 @@ const connection = require("../services/db");
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+/* GET users listing. :p */
 router.get('/list', function(req, res, next) {
   let sql = 'select * from user'
 

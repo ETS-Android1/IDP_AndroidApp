@@ -3,7 +3,7 @@ const connection = require("../services/db");
 var express = require('express');
 var router = express.Router();
 
-/* join session. */
+/* join session. :p */
 router.post('/join', function(req, res, next) {
 
     let sessionPin = req.body.sessionPin
