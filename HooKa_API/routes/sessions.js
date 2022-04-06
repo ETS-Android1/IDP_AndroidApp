@@ -9,7 +9,7 @@ router.post('/join', function(req, res, next) {
     let sessionPin = req.body.sessionPin
     let userId = req.body.userId
 
-    let sql = `select * from session where sessionPin = ${sessionPin} and sessionRunningStatus = 0`
+    let sql = `select * from session where sessionPin = ${sessionPin} and sessionRunningStatus != -1`
   
     connection.query(sql, (err, sessionData, fields) => {
       if (err) throw err
@@ -43,4 +43,25 @@ router.post('/join', function(req, res, next) {
     
   });
 
-  module.exports = router;
+  /* retrieve session. :p */
+router.post('/retrieveSession', function(req, res, next) {
+
+  let sessionPin = req.body.sessionPin
+
+  let sql = `select * from session where sessionPin = ${sessionPin} and sessionRunningStatus != -1`
+
+  connection.query(sql, (err, data, fields) => {
+    if (err) throw err
+
+    let sessionData = null
+    sessionData = data[0]
+    
+    res.status(200).json({
+      status: "success",
+      length: data?.length,
+      sessionData: sessionData,
+    });
+  })
+});
+
+module.exports = router;

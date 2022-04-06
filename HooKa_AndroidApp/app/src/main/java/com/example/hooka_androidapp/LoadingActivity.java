@@ -4,14 +4,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Toast;
+
+import com.example.hooka_androidapp.models.Question;
+import com.example.hooka_androidapp.models.Session;
 
 public class LoadingActivity extends AppCompatActivity {
 
+    final String TAG = getClass().getSimpleName();
+
     private TextView loadingTxt;
+    private  TextView usernameTB;
+    Session SessionContent = null;
+    Question QuestionContent = null;
+    int userId;
+    int sessionPin;
+    int sessionId;
+    int qnNum;
+    String previousPage;
+    boolean isActive = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +38,82 @@ public class LoadingActivity extends AppCompatActivity {
 
         loadingTxt = (TextView) findViewById(R.id.loadingTxt);
 
+        // Get the message from the intent
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
+        userId =  Integer.valueOf(intent.getStringExtra("userId"));
+        sessionPin = Integer.valueOf(intent.getStringExtra("sessionPin"));
+        previousPage = intent.getStringExtra("previousPage");
+        qnNum = Integer.valueOf(intent.getStringExtra("qnNum"));
 
+        usernameTB = (TextView) findViewById(R.id.usernameTB);
+        usernameTB.setText(username);
+
+        content(userId, sessionPin, previousPage);
+    }
+
+    public void content(int userId, int sessionPin, String previousPage) {
+        //to get session ID
+        try {
+            //retrieve session from db
+            SessionContent = Services.sessionAvailability(sessionPin);
+
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+        if (SessionContent == null) {
+            String temp = "";
+            temp += "Session has ended."+ "\n";
+            temp += "Thank you for using HooKa";
+
+            Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();
+/*
+            Intent intent = new Intent(LoadingActivity.this,MainActivity.class);
+            startActivity(intent);*/
+        }
+        else {
+            sessionId = SessionContent.sessionId;
+            /*String temp = "";
+            temp += "SessionId = "+ "\n";
+            temp += sessionId;
+
+            Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();*/
+            try {
+                //retrieve question from db
+                QuestionContent = Services.questionAvailability(sessionId, qnNum);
+
+            } catch (Exception e) {
+                Log.d(TAG, e.getMessage());
+            }
+            if (QuestionContent.accessible == 0) {
+                isActive = false;
+                Intent intent = new Intent(LoadingActivity.this,OptionsActivity.class);
+                startActivity(intent);
+            }
+            else {
+                if (previousPage.equals("SessionJoin")) {
+                    loadingTxt.setText("Entered session " + sessionPin + "!\nWaiting for more students to join..");
+                }
+                else {
+                    loadingTxt.setText("You're fast! \nWaiting for question results :D");
+                }
+            }
+        }
+        if (isActive){
+            refresh(1000); //2 seconds
+        }
+    }
+
+    //To refresh contents every few seconds
+    private void refresh(int milliseconds) {
+        final Handler handler = new Handler();
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                content(userId, sessionPin, previousPage);
+            }
+        };
+        handler.postDelayed(runnable, milliseconds);
     }
 }

@@ -2,6 +2,8 @@ package com.example.hooka_androidapp;
 
 import android.os.StrictMode;
 
+import com.example.hooka_androidapp.models.Question;
+import com.example.hooka_androidapp.models.Session;
 import com.example.hooka_androidapp.models.User;
 
 import java.io.BufferedReader;
@@ -23,8 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 
 public class Services {
-    static String baseURL = "http://192.168.50.215:3000"; /*ZY*/
-    //static String baseURL = "http://192.168.1.246:3000"; /*ZH*/
+    //static String baseURL = "http://192.168.50.215:3000"; /*ZY*/
+    static String baseURL = "http://192.168.1.246:3000"; /*ZH*/
 
 
     /* -------------------------------------USER FUNCTIONS------------------------------------- */
@@ -142,9 +144,64 @@ public class Services {
             if (!status.equals("success"))
                 return null;
 
-            String json = mapper.writeValueAsString(map.get("userData"));
-            User userData = mapper.readValue(json, new TypeReference<User>(){});
+            String userJson = mapper.writeValueAsString(map.get("userData"));
+            User userData = mapper.readValue(userJson, new TypeReference<User>(){});
             return userData;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Session sessionAvailability(int sessionPin) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("sessionPin", sessionPin);
+            String body = mapper.writeValueAsString(objectMap);
+            String apiPath = "sessions/retrieveSession";
+            String result = callPost(apiPath, body);
+
+            Map<String,Object> map = mapper.readValue(result, Map.class);
+            String status = map.get("status").toString();
+
+            if (!status.equals("success"))
+                return null;
+
+            String userJson = mapper.writeValueAsString(map.get("sessionData"));
+            Session sessionData = mapper.readValue(userJson, new TypeReference<Session>(){});
+            return sessionData;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Question questionAvailability(int sessionId, int qnNum) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("sessionId", sessionId);
+            objectMap.put("qnNumber", qnNum);
+            String body = mapper.writeValueAsString(objectMap);
+            String apiPath = "questions/available";
+            String result = callPost(apiPath, body);
+
+            Map<String,Object> map = mapper.readValue(result, Map.class);
+            String status = map.get("status").toString();
+
+            if (!status.equals("success"))
+                return null;
+
+            String userJson = mapper.writeValueAsString(map.get("questionData"));
+            Question questionData = mapper.readValue(userJson, new TypeReference<Question>(){});
+            return questionData;
 
         } catch (Exception e) {
             e.printStackTrace();
