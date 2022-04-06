@@ -69,6 +69,17 @@ public class ComputeQuestionResults extends HttpServlet{
                     resultCount[i] = count;
                     
                 }
+                
+                //change qn "accessible" to 1 (show result status)
+                
+                String sqlUpdate = "UPDATE questions set `accessible` = 1 where (sessionId = ?) and (qnNumber = ?)";
+
+                connection.setAutoCommit(false);
+                statement = connection.prepareStatement(sqlUpdate);
+                statement.setInt(1, sessionInProgress);
+                statement.setInt(2,question.getQnNumber());
+                statement.executeUpdate();
+                connection.commit();
             
         } catch (SQLException ex) {
             Logger.getLogger(SearchSessionsServlet.class.getName()).log(Level.SEVERE, null, ex);

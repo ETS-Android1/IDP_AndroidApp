@@ -76,6 +76,20 @@ public class RetrieveQuestionServlet extends HttpServlet{
                 statement.executeUpdate();
                 connection.commit();
 
+                
+                //update PREVIOUS qn accesibility status to -1 (not accessible status)
+                if(sessionRunningStatus>1){
+                    sqlUpdate = "UPDATE questions set `accessible` = -1 where (sessionId = ?) and (qnNumber = ?)";
+
+                    connection.setAutoCommit(false);
+                    statement = connection.prepareStatement(sqlUpdate);
+                    statement.setInt(1, sessionInProgress);
+                    statement.setInt(2,sessionRunningStatus-1);
+                    statement.executeUpdate();
+                    connection.commit();
+                }
+                
+                
                 //update qn accesibility status to 0 (qn airing status)
                 sqlUpdate = "UPDATE questions set `accessible` = 0 where (sessionId = ?) and (qnNumber = ?)";
 
@@ -102,7 +116,6 @@ public class RetrieveQuestionServlet extends HttpServlet{
                 question.setQnNumber(resultset.getInt("qnNumber"));
                 question.setQnDesc(resultset.getString("qnDesc"));
                 question.setAnswer(resultset.getString("answer"));
-                question.setAccessible(resultset.getBoolean("accessible"));
                 
                 //options
                 ArrayList<Option> options = new ArrayList<Option>();
@@ -141,6 +154,8 @@ public class RetrieveQuestionServlet extends HttpServlet{
 //                RequestDispatcher rd = request.getRequestDispatcher("/computeFinalResult");
 //                rd.forward(request, response);
                 airNextQn = false;
+                
+                
                 
             }
 

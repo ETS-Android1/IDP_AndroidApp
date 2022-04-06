@@ -39,6 +39,8 @@ public class EndSessionServlet extends HttpServlet{
         
         HttpSession session = request.getSession();
         int sessionInProgress = Integer.parseInt(session.getAttribute("sessionInProgress").toString());
+        
+        Question question = (Question) session.getAttribute("questionTobeAired");
 
         String sqlUpdate = "UPDATE session SET sessionRunningStatus = -1 WHERE sessionId = ?";
         
@@ -50,6 +52,15 @@ public class EndSessionServlet extends HttpServlet{
                 connection.setAutoCommit(false);
                 statement = connection.prepareStatement(sqlUpdate);
                 statement.setInt(1, sessionInProgress);
+                statement.executeUpdate();
+                connection.commit();
+                
+                sqlUpdate = "UPDATE questions set `accessible` = -1 where (sessionId = ?) and (qnNumber = ?)";
+
+                connection.setAutoCommit(false);
+                statement = connection.prepareStatement(sqlUpdate);
+                statement.setInt(1, sessionInProgress);
+                statement.setInt(2,question.getQnNumber());
                 statement.executeUpdate();
                 connection.commit();
             
