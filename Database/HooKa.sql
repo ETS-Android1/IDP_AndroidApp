@@ -108,8 +108,8 @@ LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
 INSERT INTO `questions` (`sessionId`, `qnNumber`, `qnDesc`, `answer`) 
 					VALUES (1,1,'What is Zhao Yi converse shoe size?','A'),
-						      (1,2,'How much is Fine Food Duck Rice (Upsize meat and rice)?','C'),
-                  (1,3,'When is Singapore National Day?','B');
+						   (1,2,'How much is Fine Food Duck Rice (Upsize meat and rice)?','C'),
+						   (1,3,'When is Singapore National Day?','B');
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 UNLOCK TABLES;
 
