@@ -210,14 +210,14 @@ public class Services {
         }
     }
 
-    public static Options optionsRetrieval(int qnId, String option) {
+    public static Options optionsRetrieval(int qnId, String optionLetter) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 
             Map<String, Object> objectMap = new HashMap<>();
             objectMap.put("qnId", qnId);
-            objectMap.put("option", option);
+            objectMap.put("optionLetter", optionLetter);
             String body = mapper.writeValueAsString(objectMap);
             String apiPath = "options/retrieveOption";
             String result = callPost(apiPath, body);

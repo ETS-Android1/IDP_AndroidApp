@@ -20,7 +20,7 @@ public class LoadingActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
 
     private TextView loadingTxt;
-    private  TextView usernameTB;
+    private TextView usernameTB;
     Session SessionContent = null;
     Question QuestionContent = null;
     int userId;
@@ -41,7 +41,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         // Get the message from the intent
         Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
+        username = intent.getStringExtra("username");
         userId =  Integer.valueOf(intent.getStringExtra("userId"));
         sessionPin = Integer.valueOf(intent.getStringExtra("sessionPin"));
         previousPage = intent.getStringExtra("previousPage");
@@ -50,10 +50,10 @@ public class LoadingActivity extends AppCompatActivity {
         usernameTB = (TextView) findViewById(R.id.usernameTB);
         usernameTB.setText(username);
 
-        content(userId, sessionPin, previousPage);
+        content();
     }
 
-    public void content(int userId, int sessionPin, String previousPage) {
+    public void content() {
         //to get session ID
         try {
             //retrieve session from db
@@ -73,6 +73,8 @@ public class LoadingActivity extends AppCompatActivity {
             Bundle extras= new Bundle();
             extras.putString("username",username);
             extras.putString("userId", String.valueOf(userId));
+
+            intent.putExtras(extras);
             startActivity(intent);
         }
         else {
@@ -94,6 +96,8 @@ public class LoadingActivity extends AppCompatActivity {
                 extras.putString("qnNumber", String.valueOf(qnNum));
                 extras.putString("SessionId", String.valueOf(sessionId));
                 extras.putString("SessionPin", String.valueOf(sessionPin));
+
+                intent.putExtras(extras);
                 startActivity(intent);
             }
             else { //Next Question still not accessible
@@ -117,7 +121,7 @@ public class LoadingActivity extends AppCompatActivity {
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                content(userId, sessionPin, previousPage);
+                content();
             }
         };
         handler.postDelayed(runnable, milliseconds);

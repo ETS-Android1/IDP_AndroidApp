@@ -142,15 +142,17 @@ LOCK TABLES `options` WRITE;
 /*!40000 ALTER TABLE `options` DISABLE KEYS */;
 INSERT INTO `options` (`qnId`, `sessionId`, `optionLetter`, `optionDesc`) 
 					VALUES (1,1,'A','UK8'),
-						      (1,1,'B','UK6'),
+				  (1,1,'B','UK6'),
                   (1,1,'C','UK7'),
-						      (2,1,'A','$3.00'),
+                  (1,1,'D','UK9'),
+				  (2,1,'A','$3.00'),
                   (2,1,'B','$4.00'),
                   (2,1,'C','$5.50'),
                   (2,1,'D','$6.50'),
                   (3,1,'A','9 September'),
                   (3,1,'B','9 August'),
-                  (3,1,'C','10 August');
+                  (3,1,'C','10 August'),
+                  (3,1,'D','10 September');
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
 

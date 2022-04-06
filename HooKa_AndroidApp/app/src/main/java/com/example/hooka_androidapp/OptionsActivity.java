@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,22 +19,23 @@ public class OptionsActivity extends AppCompatActivity {
 
     final String TAG = getClass().getSimpleName();
 
-    private TextView txtTimer;
-    private  TextView qnTxt;
+    private TextView username_TB;
+    private TextView qnTxt;
     Options OptionContentA = null;
     Options OptionContentB = null;
     Options OptionContentC = null;
     Options OptionContentD = null;
     Question QuestionContent = null;
-    Button optionA = null;
-    Button optionB = null;
-    Button optionC = null;
-    Button optionD = null;
+    private Button optionA = null;
+    private Button optionB = null;
+    private Button optionC = null;
+    private Button optionD = null;
     int userId;
     int sessionId;
     int sessionPin;
     int qnNum;
     String username;
+    Boolean isActive = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +44,19 @@ public class OptionsActivity extends AppCompatActivity {
 
         // Get the message from the intent
         Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
+        username = intent.getStringExtra("username");
         userId =  Integer.valueOf(intent.getStringExtra("userId"));
-        sessionId = Integer.valueOf(intent.getStringExtra("sessionId"));
-        qnNum = Integer.valueOf(intent.getStringExtra("qnNum"));
-        sessionPin = Integer.valueOf(intent.getStringExtra("sessionPin"));
+        sessionId = Integer.valueOf(intent.getStringExtra("SessionId"));
+        qnNum = Integer.valueOf(intent.getStringExtra("qnNumber"));
+        sessionPin = Integer.valueOf(intent.getStringExtra("SessionPin"));
 
-        txtTimer = (TextView) findViewById(R.id.txtTimer);
-        txtTimer.setText(username);
+        username_TB = (TextView) findViewById(R.id.username_TB);
+        username_TB.setText(username);
 
         qnTxt = (TextView) findViewById(R.id.qnTxt);
-        qnTxt.setText(qnNum);
+        qnTxt.setText("Question " + String.valueOf(qnNum));
+
+        content();
 
 
 /*
@@ -73,7 +77,7 @@ public class OptionsActivity extends AppCompatActivity {
 
     }
 
-    public void content(int sessionId, int qnNum) {
+    public void content() {
         //To get Question data
         try {
             //retrieve question from db
@@ -81,11 +85,19 @@ public class OptionsActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
-        if (QuestionContent == null) {
-            String temp = "";
-            temp += "Qn not found.";
+        if (QuestionContent.accessible != 0) { //Question not accessible
+            isActive = false;
+            qnNum += 1;
+            Intent intent = new Intent(OptionsActivity.this,ResultsActivity.class);
+            Bundle extras= new Bundle();
+            extras.putString("username",username);
+            extras.putString("userId", String.valueOf(userId));
+            extras.putString("qnNumber", String.valueOf(qnNum));
+            extras.putString("SessionId", String.valueOf(sessionId));
+            extras.putString("SessionPin", String.valueOf(sessionPin));
 
-            Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
+            intent.putExtras(extras);
+            startActivity(intent);
         }
         else{
             int qnId = QuestionContent.qnId;
@@ -99,19 +111,44 @@ public class OptionsActivity extends AppCompatActivity {
             catch (Exception e) {
                 Log.d(TAG, e.getMessage());
             }
+
             if (OptionContentA == null) {
+                isActive = false;// To remove this ltr
+
                 String temp = "";
                 temp += "OptionA not found.";
 
                 Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();
             }
             else {
-                optionA.setText("A\n\n" + OptionContentA.optionDescription);
-                optionB.setText("B\n\n" + OptionContentB.optionDescription);
-                optionC.setText("C\n\n" + OptionContentC.optionDescription);
-                optionD.setText("D\n\n" + OptionContentD.optionDescription);
+                optionA = (Button) findViewById(R.id.optionA_Btn);
+                optionA.setText("A\n\n" + OptionContentA.optionDesc);
+                optionB = (Button) findViewById(R.id.optionB_Btn);
+                optionB.setText("A\n\n" + OptionContentB.optionDesc);
+                optionC = (Button) findViewById(R.id.optionC_Btn);
+                optionC.setText("A\n\n" + OptionContentC.optionDesc);
+                optionD = (Button) findViewById(R.id.optionD_Btn);
+                optionD.setText("A\n\n" + OptionContentD.optionDesc);
+
             }
         }
+        //button clicks
 
+        if (isActive){
+            refresh(1000); //2 seconds
+        }
+    }
+
+    //To refresh contents every few seconds
+    private void refresh(int milliseconds) {
+        final Handler handler = new Handler();
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                content();
+            }
+        };
+        handler.postDelayed(runnable, milliseconds);
     }
 }

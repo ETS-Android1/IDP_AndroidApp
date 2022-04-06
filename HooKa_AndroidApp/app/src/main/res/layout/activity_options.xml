@@ -7,19 +7,20 @@
     tools:context=".OptionsActivity">
 
     <TextView
-        android:id="@+id/txtTimer"
+        android:id="@+id/username_TB"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#cccccc"
-        android:gravity="left"
+        android:textSize="20sp"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:gravity="left"
+        android:text="username!"/>
 
     <TableLayout
         android:id="@+id/tableId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtTimer" >
+        android:layout_below="@id/username_TB" >
         <TableRow>
             <TextView
                 android:id="@+id/qnTxt"

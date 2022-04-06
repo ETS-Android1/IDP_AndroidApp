@@ -9,5 +9,5 @@ public class Options {
     public int qnId;
     public int qnNumber;
     public String optionLetter;
-    public String optionDescription;
+    public String optionDesc;
 }
