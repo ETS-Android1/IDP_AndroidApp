@@ -2,6 +2,7 @@ package com.example.hooka_androidapp;
 
 import android.os.StrictMode;
 
+import com.example.hooka_androidapp.models.Options;
 import com.example.hooka_androidapp.models.Question;
 import com.example.hooka_androidapp.models.Session;
 import com.example.hooka_androidapp.models.User;
@@ -202,6 +203,34 @@ public class Services {
             String userJson = mapper.writeValueAsString(map.get("questionData"));
             Question questionData = mapper.readValue(userJson, new TypeReference<Question>(){});
             return questionData;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Options optionsRetrieval(int qnId, String option) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("qnId", qnId);
+            objectMap.put("option", option);
+            String body = mapper.writeValueAsString(objectMap);
+            String apiPath = "options/retrieveOption";
+            String result = callPost(apiPath, body);
+
+            Map<String,Object> map = mapper.readValue(result, Map.class);
+            String status = map.get("status").toString();
+
+            if (!status.equals("success"))
+                return null;
+
+            String userJson = mapper.writeValueAsString(map.get("optionData"));
+            Options optionsData = mapper.readValue(userJson, new TypeReference<Options>(){});
+            return optionsData;
 
         } catch (Exception e) {
             e.printStackTrace();

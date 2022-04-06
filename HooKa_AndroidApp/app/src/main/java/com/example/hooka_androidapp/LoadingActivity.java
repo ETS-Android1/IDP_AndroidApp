@@ -28,6 +28,7 @@ public class LoadingActivity extends AppCompatActivity {
     int sessionId;
     int qnNum;
     String previousPage;
+    String username;
     boolean isActive = true;
 
 
@@ -61,23 +62,22 @@ public class LoadingActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
-        if (SessionContent == null) {
+        if (SessionContent == null) { //Session has ended
             String temp = "";
             temp += "Session has ended."+ "\n";
             temp += "Thank you for using HooKa";
 
             Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();
-/*
+
             Intent intent = new Intent(LoadingActivity.this,MainActivity.class);
-            startActivity(intent);*/
+            Bundle extras= new Bundle();
+            extras.putString("username",username);
+            extras.putString("userId", String.valueOf(userId));
+            startActivity(intent);
         }
         else {
             sessionId = SessionContent.sessionId;
-            /*String temp = "";
-            temp += "SessionId = "+ "\n";
-            temp += sessionId;
 
-            Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_LONG).show();*/
             try {
                 //retrieve question from db
                 QuestionContent = Services.questionAvailability(sessionId, qnNum);
@@ -85,12 +85,18 @@ public class LoadingActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.d(TAG, e.getMessage());
             }
-            if (QuestionContent.accessible == 0) {
+            if (QuestionContent.accessible == 0) { //Question is Accessible
                 isActive = false;
                 Intent intent = new Intent(LoadingActivity.this,OptionsActivity.class);
+                Bundle extras= new Bundle();
+                extras.putString("username",username);
+                extras.putString("userId", String.valueOf(userId));
+                extras.putString("qnNumber", String.valueOf(qnNum));
+                extras.putString("SessionId", String.valueOf(sessionId));
+                extras.putString("SessionPin", String.valueOf(sessionPin));
                 startActivity(intent);
             }
-            else {
+            else { //Next Question still not accessible
                 if (previousPage.equals("SessionJoin")) {
                     loadingTxt.setText("Entered session " + sessionPin + "!\nWaiting for more students to join..");
                 }
