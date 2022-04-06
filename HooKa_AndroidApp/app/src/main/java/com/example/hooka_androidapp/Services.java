@@ -4,6 +4,7 @@ import android.os.StrictMode;
 
 import com.example.hooka_androidapp.models.Options;
 import com.example.hooka_androidapp.models.Question;
+import com.example.hooka_androidapp.models.Responses;
 import com.example.hooka_androidapp.models.Session;
 import com.example.hooka_androidapp.models.User;
 
@@ -231,6 +232,36 @@ public class Services {
             String userJson = mapper.writeValueAsString(map.get("optionData"));
             Options optionsData = mapper.readValue(userJson, new TypeReference<Options>(){});
             return optionsData;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Responses userResponse(int qnId, int userId, int sessionId, String choice) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("qnId", qnId);
+            objectMap.put("userId", userId);
+            objectMap.put("sessionId", sessionId);
+            objectMap.put("choice", choice);
+            String body = mapper.writeValueAsString(objectMap);
+            String apiPath = "responses/updateUserResponse";
+            String result = callPost(apiPath, body);
+
+            Map<String,Object> map = mapper.readValue(result, Map.class);
+            String status = map.get("status").toString();
+
+            if (!status.equals("success"))
+                return null;
+
+            String userJson = mapper.writeValueAsString(map.get("responseData"));
+            Responses responsesData = mapper.readValue(userJson, new TypeReference<Responses>(){});
+            return responsesData;
 
         } catch (Exception e) {
             e.printStackTrace();

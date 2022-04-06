@@ -69,4 +69,28 @@ router.post('/userQuestionResponse', function(req, res, next) {
         
     });
 
+   /* updating user response. :p */
+   router.post('/updateUserResponse', function(req, res, next) {
+
+    let qnId = req.body.qnId
+    let userId = req.body.userId
+    let sessionId = req.body.sessionId
+    let choice = req.body.choice
+
+    let sql = `insert into response (userId, qnId, sessionId, choice) values (${userId}, ${qnId}, ${sessionId}, '${choice}')`
+
+    connection.query(sql, (err, data, fields) => {
+        if (err) throw err
+
+        let responseData = null
+        responseData = data[0]
+
+        res.status(200).json({
+        status: "success",
+        length: data?.length,
+        responseData: responseData,
+        });
+    })
+});
+
   module.exports = router;
