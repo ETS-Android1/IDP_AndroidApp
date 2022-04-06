@@ -1,12 +1,13 @@
 <%-- 
-    Document   : sessionLobby
-    Created on : 5 Apr 2022, 7:24:30 pm
+    Document   : barChart_QnResults
+    Created on : 6 Apr 2022, 11:43:11 pm
     Author     : zhaoyiwu
 --%>
 
-
 <%@page import="ee.hooka.User"%>
 <%@page import="ee.hooka.Session"%>
+<%@page import="ee.hooka.Question"%>
+<%@page import="ee.hooka.Option"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Timer"%>
 <%@page import="java.util.TimerTask"%>
@@ -14,6 +15,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <head>
         <link rel="stylesheet" href="css/master.css"> <%--Link to css--%>
         <link rel="icon" type="image/png" href="images/ZacZee's-logos_white.png"/> <%--Favicon--%>
@@ -61,32 +63,29 @@
 
             <% }else{ 
 
-            List<String> students = (ArrayList<String>) session.getAttribute("students");
+            Question question = (Question) session.getAttribute("questionTobeAired");
+            
             %>
             
-            <div style="text-align: center">
-                <font color="red">
-                        <%=request.getAttribute("message")==null?"":request.getAttribute("message")%><br/>
-                </font>
-                <br/>
-            </div>
+            <h1>Question <%=question.getQnNumber()%>:</h1>
+            <h1><%=question.getQnDesc()%></h1>
             
-            <h1>Waiting for students to join</h1>
-            <h1>Current count: <%=students.size()%></h1>
-            
-            <div class="outergrid">
+            <div>
             <% 
-            if(students == null || students.size() <= 0){
+            if(question.getOptions() == null || question.getOptions().size() <= 0){
             %>
-            <tr><td colspan="5">(No students yet)</td></tr>
+            <tr><td colspan="1">(No options)</td></tr>
             <%
             }else{
-                for(String student:students){
+                for(Option option:question.getOptions()){
                 %>
                 
-                    <div class="innergrid">
-                            <b><%=student%></b>
-                    </div>
+                <tr>
+                    <td>
+                        
+                        <%=option.getOptionLetter()%>.  <%=option.getOptionDesc()%><br>
+                    </td>
+                </tr>
                 
                 <%
                 }
@@ -95,19 +94,56 @@
             %>
             </div>
             
+            <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+            <%
+
+            int[] counts = (int[]) session.getAttribute("resultCount");
+            
+            %>
+            
+            <script>
+                var xValues = [];
+                var yValues = [];
+                var barColors = [];
+                
+                <%
+
+                    for(int i=0;i<counts.length;i++){%>
+                        xValues.push("<%=question.getOptions().get(i).getOptionLetter()%>");
+                        yValues.push(<%=counts[i]%>);
+                        barColors.push("purple");
+                   <%}
+
+                %>
+
+                new Chart("myChart", {
+                  type: "bar",
+                  data: {
+                    labels: xValues,
+                    datasets: [{
+                      backgroundColor: barColors,
+                      data: yValues
+                    }]
+                  },
+                  options: {
+                    legend: {display: false},
+                    title: {
+                      display: true,
+                      text: "Your Responses"
+                    }
+                  }
+                });
+            </script>
+            
             <div>
             <form action="retrieveQuestion" method="post">
-                <input type="submit" value="Show First Question"/>
+                <input type="submit" value="Next Question"/>
             </form>
             </div>
             
             <% } %>
             
-            <!--<div class="displaySub">    
-                <div><h2>New Arrivals</h2></div>
-                <div><img src="images/landingPageDisplay.jpg" alt="chuck 70 high tops" width=85%/></div>
-                <div><img src="images/landingPageDisplay2.jpg" alt="yeezy slides onxy" width=90%/></div>
-            </div>-->
         </div>
         
             

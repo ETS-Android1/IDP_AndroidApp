@@ -95,8 +95,8 @@
             </div>
             
             <div>
-            <form action="showQuestion" method="post">
-                <input type="submit" value="Show First Question"/>
+            <form action="computeQuestionResults" method="post">
+                <input type="submit" value="Show Results"/>
             </form>
             </div>
             
