@@ -60,7 +60,8 @@ CREATE TABLE `session` (
   `sessionPin` int(6) NOT NULL,
   `sessionName` varchar(256) NOT NULL,
   `userId` int(11) NOT NULL,
-  `sessionRunningStatus` BOOLEAN DEFAULT 0 NOT NULL,
+  `sessionRunningStatus` int(2) DEFAULT -1 NOT NULL,
+  `totalQns` int(2) NOT NULL,
   PRIMARY KEY (`sessionId`),
   KEY `UserId_idx` (`userId`),
   CONSTRAINT `UserId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -73,8 +74,8 @@ CREATE TABLE `session` (
 
 LOCK TABLES `session` WRITE;
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
-INSERT INTO `session` (`sessionName`, `sessionPin`, `userId`, `sessionRunningStatus`) 
-					VALUES ('wazzup', 101010, 1, 0);
+INSERT INTO `session` (`sessionName`, `sessionPin`, `userId`, `totalQns`) 
+					VALUES ('wazzup', 101010, 1, 3);
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -91,7 +92,7 @@ CREATE TABLE `questions` (
   `sessionId` int(11) NOT NULL,
   `qnDesc` varchar(256) NOT NULL,
   `answer` varchar(8) NOT NULL,
-  `accessible` BOOLEAN DEFAULT 0 NOT NULL,
+  `accessible` int(2) DEFAULT -1 NOT NULL,
   PRIMARY KEY (`qnId`),
   KEY `SessionId_idx` (`sessionId`),
   CONSTRAINT `SessionIdQns` FOREIGN KEY (`sessionId`) REFERENCES `session` (`sessionId`) ON DELETE NO ACTION ON UPDATE NO ACTION
