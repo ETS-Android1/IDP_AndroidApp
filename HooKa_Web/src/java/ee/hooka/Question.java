@@ -14,6 +14,7 @@ public class Question {
     
     private int qnId;
     private int sessionId;
+    private int qnNumber;
     private String qnDesc;
     private String answer;
     private boolean accessible;
@@ -38,6 +39,14 @@ public class Question {
         this.sessionId = sessionId;
     }
 
+    public int getQnNumber() {
+        return qnNumber;
+    }
+
+    public void setQnNumber(int qnNumber) {
+        this.qnNumber = qnNumber;
+    }
+    
     public String getQnDesc() {
         return qnDesc;
     }

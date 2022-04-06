@@ -95,6 +95,7 @@ public class RetrieveQuestionServlet extends HttpServlet{
                 
                 question.setQnId(resultset.getInt("qnId"));
                 question.setSessionId(resultset.getInt("sessionId"));
+                question.setQnNumber(resultset.getInt("qnNumber"));
                 question.setQnDesc(resultset.getString("qnDesc"));
                 question.setAnswer(resultset.getString("answer"));
                 question.setAccessible(resultset.getBoolean("accessible"));

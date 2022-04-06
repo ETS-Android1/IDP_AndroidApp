@@ -35,10 +35,19 @@ router.post('/create', function(req, res) {
   connection.query(sql, (err, data, fields) => {
     if (err) throw err
 
-    res.status(200).json({
-      status: "success",
-      length: data?.length,
-      data: data,
+    let sql = `select * from user where fullname = '${fullname}'`
+
+    connection.query(sql, (err, data, fields) => {
+      if (err) throw err
+
+      let userData = null
+      userData = data[0]
+
+      res.status(200).json({
+        status: "success",
+        length: data?.length,
+        userData: userData,
+      });
     });
   })
 });

@@ -23,8 +23,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 
 public class Services {
-    //static String baseURL = "http://192.168.72.217:3000"; /*ZY*/
-    static String baseURL = "http://192.168.1.246:3000"; /*ZH*/
+    static String baseURL = "http://192.168.50.215:3000"; /*ZY*/
+    //static String baseURL = "http://192.168.1.246:3000"; /*ZH*/
 
 
     /* -------------------------------------USER FUNCTIONS------------------------------------- */
@@ -97,6 +97,7 @@ public class Services {
             String json = mapper.writeValueAsString(map.get("userData"));
             User userData = mapper.readValue(json, new TypeReference<User>(){});
             return userData;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -137,14 +138,14 @@ public class Services {
 
             Map<String,Object> map = mapper.readValue(result, Map.class);
             String status = map.get("status").toString();
-            boolean isAuthenticated = Boolean.valueOf(map.get("isAuthenticated").toString());
 
-            if (!isAuthenticated)
+            if (!status.equals("success"))
                 return null;
 
             String json = mapper.writeValueAsString(map.get("userData"));
             User userData = mapper.readValue(json, new TypeReference<User>(){});
             return userData;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;

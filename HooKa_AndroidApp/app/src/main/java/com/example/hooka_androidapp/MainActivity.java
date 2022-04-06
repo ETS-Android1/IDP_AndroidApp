@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
 
     private TextView WelcomTxt;
-    TextView sessionPin = null;
+    TextView sessionPinTxt = null;
     Button joinSessionBtn = null;
     User UserContent = null;
 
@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Database database = new Database();
-        database.execute();
+//        Database database = new Database();
+//        database.execute();
 
         // Get the message from the intent
         Intent intent = getIntent();
@@ -43,23 +43,23 @@ public class MainActivity extends AppCompatActivity {
         WelcomTxt = (TextView) findViewById(R.id.WelcomeTxt);
         WelcomTxt.setText("Welcome " + username);
 
-        sessionPin = findViewById(R.id.join_sessionPin);
+        sessionPinTxt = findViewById(R.id.join_sessionPin);
         joinSessionBtn = (Button) findViewById(R.id.join_enterSession);
 
 
         joinSessionBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                Integer sessionId = Integer.valueOf(sessionPin.getText().toString());
+                Integer sessionPin = Integer.valueOf(sessionPinTxt.getText().toString());
                 try {
                     //retrieve user from db
-                    UserContent = Services.joinSession(userId, sessionId);
+                    UserContent = Services.joinSession(userId, sessionPin);
 
                 } catch (Exception e) {
                     Log.d(TAG, e.getMessage());
                 }
                 if (UserContent == null) {
-                    sessionPin.setText("");
+                    sessionPinTxt.setText("");
 
                     String temp = "";
                     temp += "Session not found."+ "\n";

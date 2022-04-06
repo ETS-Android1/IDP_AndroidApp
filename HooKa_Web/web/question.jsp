@@ -64,11 +64,11 @@
             <% }else{ 
 
             Question question = (Question) session.getAttribute("questionTobeAired");
-            ArrayList<Option> qnOptions = question.getOptions();
+            ArrayList<Option> qnOptions = (ArrayList<Option>) question.getOptions();
             %>
             
             <h1>Question <%=question.getQnNumber()%>:</h1>
-            <h1><%=question.getQnDesc%></h1>
+            <h1><%=question.getQnDesc()%></h1>
             
             <div>
             <% 
