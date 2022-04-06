@@ -38,11 +38,11 @@ public class StartSessionServlet  extends HttpServlet{
         HttpServletResponse response)
         throws ServletException, IOException {
             
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(StartSessionServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            TimeUnit.SECONDS.sleep(1);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(StartSessionServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
             
             HttpSession session = request.getSession();
             int sessionInProgress = Integer.parseInt(session.getAttribute("sessionInProgress").toString());

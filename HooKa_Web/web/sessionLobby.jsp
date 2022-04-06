@@ -74,6 +74,10 @@
             <h1>Waiting for students to join</h1>
             <h1>Current count: <%=students.size()%></h1>
             
+            <form action="startSession" method="post">
+                <input type="submit" value="Refresh"/>
+            </form>
+            
             <div class="outergrid">
             <% 
             if(students == null || students.size() <= 0){
