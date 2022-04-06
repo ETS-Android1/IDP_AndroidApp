@@ -1,9 +1,8 @@
 <%-- 
-    Document   : sessionLobby
-    Created on : 5 Apr 2022, 7:24:30 pm
+    Document   : endOfSession
+    Created on : 6 Apr 2022, 10:32:18 pm
     Author     : zhaoyiwu
 --%>
-
 
 <%@page import="ee.hooka.User"%>
 <%@page import="ee.hooka.Session"%>
@@ -71,43 +70,19 @@
                 <br/>
             </div>
             
-            <h1>Waiting for students to join</h1>
-            <h1>Current count: <%=students.size()%></h1>
+            <h1>End of Session!</h1>
+            <h1></h1>
             
-            <div class="outergrid">
-            <% 
-            if(students == null || students.size() <= 0){
-            %>
-            <tr><td colspan="5">(No students yet)</td></tr>
-            <%
-            }else{
-                for(String student:students){
-                %>
-                
-                    <div class="innergrid">
-                            <b><%=student%></b>
-                    </div>
-                
-                <%
-                }
-                
-            }
-            %>
-            </div>
+            
             
             <div>
-            <form action="retrieveQuestion" method="post">
-                <input type="submit" value="Show First Question"/>
+            <form action="search" method="post">
+                <input type="submit" value="End Session"/>
             </form>
             </div>
             
             <% } %>
             
-            <!--<div class="displaySub">    
-                <div><h2>New Arrivals</h2></div>
-                <div><img src="images/landingPageDisplay.jpg" alt="chuck 70 high tops" width=85%/></div>
-                <div><img src="images/landingPageDisplay2.jpg" alt="yeezy slides onxy" width=90%/></div>
-            </div>-->
         </div>
         
             

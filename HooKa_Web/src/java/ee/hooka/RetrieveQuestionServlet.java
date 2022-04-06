@@ -39,6 +39,9 @@ public class RetrieveQuestionServlet extends HttpServlet{
         int sessionInProgress = Integer.parseInt(session.getAttribute("sessionInProgress").toString());
         
         Question question = new Question();
+        int sessionRunningStatus = -2;
+        int totalQns = -1;
+        boolean airNextQn = true;
         
         Connection connection = null;
         PreparedStatement statement = null;
@@ -57,8 +60,8 @@ public class RetrieveQuestionServlet extends HttpServlet{
             resultset = statement.executeQuery();
 
             resultset.next();
-            int sessionRunningStatus = resultset.getInt("sessionRunningStatus");
-            int totalQns = resultset.getInt("totalQns");
+            sessionRunningStatus = resultset.getInt("sessionRunningStatus");
+            totalQns = resultset.getInt("totalQns");
 
             //if status<totalQns 
             if(sessionRunningStatus<totalQns){
@@ -74,11 +77,12 @@ public class RetrieveQuestionServlet extends HttpServlet{
                 connection.commit();
 
                 //update qn accesibility status to 0 (qn airing status)
-                sqlUpdate = "UPDATE questions set accessible = 0 where sessionId = ?";
+                sqlUpdate = "UPDATE questions set `accessible` = 0 where (sessionId = ?) and (qnNumber = ?)";
 
                 connection.setAutoCommit(false);
                 statement = connection.prepareStatement(sqlUpdate);
                 statement.setInt(1, sessionInProgress);
+                statement.setInt(2,sessionRunningStatus);
                 statement.executeUpdate();
                 connection.commit();
 
@@ -99,14 +103,13 @@ public class RetrieveQuestionServlet extends HttpServlet{
                 question.setQnDesc(resultset.getString("qnDesc"));
                 question.setAnswer(resultset.getString("answer"));
                 question.setAccessible(resultset.getBoolean("accessible"));
-
+                
                 //options
                 ArrayList<Option> options = new ArrayList<Option>();
 
-                sqlSelect = "SELECT * FROM questions WHERE qnId = ?";
+                sqlSelect = "SELECT * FROM options WHERE qnId = ?";
                 statement = connection.prepareStatement(sqlSelect);
                 statement.setInt(1,resultset.getInt("qnId"));
-
                 ResultSet optionsResultset = statement.executeQuery();
 
                 while(optionsResultset.next()){
@@ -121,19 +124,28 @@ public class RetrieveQuestionServlet extends HttpServlet{
 
                 options.add(option);
 
-            }
+                }
 
-            question.setOptions(options);
+                question.setOptions(options);
+                
+                //---test-----
+//                request.setAttribute("message", 
+//                                    "question options: " + question.getOptions().get(0).getOptionDesc());
+//                    RequestDispatcher rd = request.getRequestDispatcher("/sessionLobby.jsp");
+//                    rd.forward(request, response);
+                ///
 
             }else{
                 //completed last qn
                 //redirect to final result page?
-                RequestDispatcher rd = request.getRequestDispatcher("/computeFinalResult");
-                rd.forward(request, response);
+//                RequestDispatcher rd = request.getRequestDispatcher("/computeFinalResult");
+//                rd.forward(request, response);
+                airNextQn = false;
+                
             }
 
 
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(SearchSessionsServlet.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
             System.err.println(ex.getMessage());
@@ -161,13 +173,17 @@ public class RetrieveQuestionServlet extends HttpServlet{
                 }
             }
 
+            //redirect to qn page
+            if(airNextQn){
+                session.setAttribute("questionTobeAired", (Object) question);
+                response.sendRedirect(this.getServletContext().getContextPath() + "/question.jsp");
+            }else{
+                RequestDispatcher rd = request.getRequestDispatcher("/endSession");
+                rd.forward(request, response);
+            }
+            
         }
 
-        System.out.println(question);
-        //redirect to qn page
-        session.setAttribute("questionToBeAired", (Question) question);
-        response.sendRedirect(this.getServletContext().getContextPath() + "/question.jsp");
-        
     }
     
 }
