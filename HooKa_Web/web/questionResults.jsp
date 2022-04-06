@@ -82,8 +82,15 @@
                 
                 <tr>
                     <td>
+                        <%if(question.getAnswer().equals(option.getOptionLetter())){%>
+                        
+                        <font color="green"><%=option.getOptionLetter()%>.  <%=option.getOptionDesc()%></font><br>
+                        
+                        <%} else {%>
                         
                         <%=option.getOptionLetter()%>.  <%=option.getOptionDesc()%><br>
+                        
+                        <%}%>
                     </td>
                 </tr>
                 
@@ -110,7 +117,7 @@
                 <%
 
                     for(int i=0;i<counts.length;i++){%>
-                        xValues.push("<%=question.getOptions().get(i).getOptionLetter()%>");
+                        xValues.push("<%=question.getOptions().get(i).getOptionLetter()%> (<%=counts[i]%>)");
                         yValues.push(<%=counts[i]%>);
                         barColors.push("purple");
                    <%}
