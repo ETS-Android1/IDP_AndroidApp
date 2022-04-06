@@ -51,7 +51,7 @@ public class Services {
         }
     }
 
-    public static boolean createUser(String userType, String fullname, String mobile, String password) {
+    public static User createUser(String userType, String fullname, String mobile, String password) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
@@ -63,10 +63,17 @@ public class Services {
 
             Map<String,Object> map = mapper.readValue(result, Map.class);
             String status = map.get("status").toString();
-            return status.equals("success");
+
+            String json = mapper.writeValueAsString(map.get("userData"));
+            User userData = mapper.readValue(json, new TypeReference<User>(){});
+            return userData;
+
+            //return status.equals("success");
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            return false;
+            return null;
+
+            //return false;
         }
     }
 
@@ -115,25 +122,35 @@ public class Services {
             return false;
         }
     }
-/*
-    public static boolean joinSession(int userID, int sessionPin) {
+
+    public static User joinSession(int userID, int sessionPin) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 
-            //String body =
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("userId", userID);
+            objectMap.put("sessionPin", sessionPin);
+            String body = mapper.writeValueAsString(objectMap);
             String apiPath = "sessions/join";
             String result = callPost(apiPath, body);
 
             Map<String,Object> map = mapper.readValue(result, Map.class);
             String status = map.get("status").toString();
-            return status.equals("success");
+            boolean isAuthenticated = Boolean.valueOf(map.get("isAuthenticated").toString());
+
+            if (!isAuthenticated)
+                return null;
+
+            String json = mapper.writeValueAsString(map.get("userData"));
+            User userData = mapper.readValue(json, new TypeReference<User>(){});
+            return userData;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
-*/
+
     /* -------------------------------------BASE FUNCTIONS------------------------------------- */
 
     // this is the base function to call the GET API based on path

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.hooka_androidapp.models.User;
 
 public class Register extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class Register extends AppCompatActivity {
     TextView passwordTB = null;
     TextView confirmPasswordTB = null;
     Button registerBtn = null;
-    Boolean createSuccessful = null;
+    User userAccount = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +47,9 @@ public class Register extends AppCompatActivity {
 
                     try {
                         //insert user into db
-                        createSuccessful = Services.createUser("Student", fullname, mobile, password);
+                        userAccount = Services.createUser("Student", fullname, mobile, password);
 
-                        if (!createSuccessful) {
+                        if (userAccount == null) {
                             String temp = "";
                             temp += "Confirm Password is wrong."+ "\n";
                             temp += "Please try again";
@@ -86,6 +87,7 @@ public class Register extends AppCompatActivity {
 
                     Bundle extras= new Bundle();
                     extras.putString("username",fullnameTB.getText().toString());
+                    extras.putString("userId", String.valueOf(userAccount.userId));
                     intent.putExtras(extras);
 
                     startActivity(intent);

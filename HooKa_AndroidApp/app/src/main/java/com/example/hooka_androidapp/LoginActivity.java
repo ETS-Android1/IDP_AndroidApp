@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     Bundle extras= new Bundle();
                     extras.putString("username",fullnameTB.getText().toString());
+                    extras.putString("userId", String.valueOf(userRetrieved.userId));
                     intent.putExtras(extras);
 
                     startActivity(intent);
