@@ -55,7 +55,7 @@ public class OptionsActivity extends AppCompatActivity {
         username = intent.getStringExtra("username");
         userId =  Integer.valueOf(intent.getStringExtra("userId"));
         sessionId = Integer.valueOf(intent.getStringExtra("SessionId"));
-        qnNum = Integer.valueOf(intent.getStringExtra("qnNumber"));
+        qnNum = Integer.valueOf(intent.getStringExtra("qnNum"));
         sessionPin = Integer.valueOf(intent.getStringExtra("SessionPin"));
         ttlQns = Integer.valueOf(intent.getStringExtra("ttlQns"));
 
@@ -94,7 +94,6 @@ public class OptionsActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
-        //Not workable 
         if (QuestionContent.accessible != 0) { //Question not accessible
             isActive = false;
             /*

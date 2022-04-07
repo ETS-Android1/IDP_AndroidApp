@@ -97,7 +97,7 @@ public class LoadingActivity extends AppCompatActivity {
                 Bundle extras= new Bundle();
                 extras.putString("username",username);
                 extras.putString("userId", String.valueOf(userId));
-                extras.putString("qnNumber", String.valueOf(qnNum));
+                extras.putString("qnNum", String.valueOf(qnNum));
                 extras.putString("SessionId", String.valueOf(sessionId));
                 extras.putString("SessionPin", String.valueOf(sessionPin));
                 extras.putString("ttlQns", String.valueOf(SessionContent.totalQns));
@@ -120,7 +120,7 @@ public class LoadingActivity extends AppCompatActivity {
                     Bundle extras= new Bundle();
                     extras.putString("username",username);
                     extras.putString("userId", String.valueOf(userId));
-                    extras.putString("qnNumber", String.valueOf(qnNum-1));
+                    extras.putString("qnNum", String.valueOf(qnNum-1));
                     extras.putString("SessionId", String.valueOf(sessionId));
                     extras.putString("SessionPin", String.valueOf(sessionPin));
                     extras.putString("ttlQns", String.valueOf(SessionContent.totalQns));
@@ -128,15 +128,16 @@ public class LoadingActivity extends AppCompatActivity {
                     intent.putExtras(extras);
                     startActivity(intent);
                 }
-            }
-            else { //Next Question still not accessible
-                if (previousPage.equals("SessionJoin")) {
-                    loadingTxt.setText("Entered session " + sessionPin + "!\nWaiting for more students to join..");
+                else { //Next Question still not accessible
+                    if (previousPage.equals("SessionJoin")) {
+                        loadingTxt.setText("Entered session " + sessionPin + "!\nWaiting for more students to join..");
+                    }
+                    else {
+                        loadingTxt.setText("You're fast! \nWaiting for question results :D");
+                    }
                 }
-                else {
-                    loadingTxt.setText("You're fast! \nWaiting for question results :D");
-                }
             }
+
         }
         if (isActive){
             refresh(1000); //2 seconds

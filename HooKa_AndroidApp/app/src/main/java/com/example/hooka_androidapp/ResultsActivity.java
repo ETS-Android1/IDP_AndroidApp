@@ -42,7 +42,7 @@ public class ResultsActivity extends AppCompatActivity {
         username = intent.getStringExtra("username");
         userId =  Integer.valueOf(intent.getStringExtra("userId"));
         sessionId = Integer.valueOf(intent.getStringExtra("SessionId"));
-        qnNum = Integer.valueOf(intent.getStringExtra("qnNumber"));
+        qnNum = Integer.valueOf(intent.getStringExtra("qnNum"));
         sessionPin = Integer.valueOf(intent.getStringExtra("SessionPin"));
         ttlQns = Integer.valueOf(intent.getStringExtra("ttlQns"));
 
@@ -59,7 +59,7 @@ public class ResultsActivity extends AppCompatActivity {
         try {
             //retrieve question from db
             QuestionContent = Services.questionAvailability(sessionId, qnNum);
-            if(qnNum != ttlQns+1){
+            if(qnNum != ttlQns){
                 QuestionContentNext = Services.questionAvailability(sessionId, qnNum+1);
             }
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class ResultsActivity extends AppCompatActivity {
             }
             pointsTxt_TB.setText("You earn " + ResponseContent.points + " points");
         }
-        if(qnNum != ttlQns+1){
+        if(qnNum != ttlQns){
             if (QuestionContentNext.accessible == 0){
                 isActive = false;
 
@@ -91,9 +91,10 @@ public class ResultsActivity extends AppCompatActivity {
                 Bundle extras= new Bundle();
                 extras.putString("username",username);
                 extras.putString("userId", String.valueOf(userId));
-                extras.putString("qnNumber", String.valueOf(qnNum));
+                extras.putString("qnNum", String.valueOf(qnNum+1));
                 extras.putString("SessionId", String.valueOf(sessionId));
                 extras.putString("SessionPin", String.valueOf(sessionPin));
+                extras.putString("ttlQns", String.valueOf(ttlQns));
 
                 intent.putExtras(extras);
                 startActivity(intent);
