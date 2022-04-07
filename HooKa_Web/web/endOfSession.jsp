@@ -7,6 +7,7 @@
 <%@page import="ee.hooka.User"%>
 <%@page import="ee.hooka.Session"%>
 <%@page import="java.util.List"%>
+<%@page import="ee.hooka.ScoreboardLine"%>
 <%@page import="java.util.Timer"%>
 <%@page import="java.util.TimerTask"%>
 <%@page import="java.util.ArrayList"%>
@@ -60,7 +61,7 @@
 
             <% }else{ 
 
-            List<String> students = (ArrayList<String>) session.getAttribute("students");
+            List<ScoreboardLine> scoreboard = (ArrayList<ScoreboardLine>) session.getAttribute("scoreboard");
             %>
             
             <div style="text-align: center">
@@ -71,9 +72,35 @@
             </div>
             
             <h1>End of Session!</h1>
-            <h1></h1>
+            <h1>Scoreboard:</h1>
             
-            
+            <table>
+            <% 
+            if(scoreboard == null || scoreboard.size() <= 0){
+            %>
+            <tr><td colspan="2">(No responses)</td></tr>
+            <%
+            }else{
+                for(ScoreboardLine line:scoreboard){
+                %>
+                
+                <tr>
+                    <td>
+                        
+                        <%=line.getFullname()%><br>
+                    </td>
+                    <td>
+                        
+                        <%=line.getTotalPoints()%><br>
+                    </td>
+                </tr>
+                
+                <%
+                }
+                
+            }
+            %>
+            </table>
             
             <div>
             <form action="search" method="post">

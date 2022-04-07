@@ -17,6 +17,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,6 +34,8 @@ public class EndSessionServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request,
     HttpServletResponse response)
     throws ServletException, IOException {
+        
+        List<ScoreboardLine> scoreboard = new ArrayList<ScoreboardLine>();
         
         Connection connection = null;
         PreparedStatement statement = null;
@@ -63,8 +67,33 @@ public class EndSessionServlet extends HttpServlet{
                 statement.setInt(2,question.getQnNumber());
                 statement.executeUpdate();
                 connection.commit();
+                
+                //search for scoreboard
+                
+                String sqlSelect = "Select A.fullname as fullname, sum(B.points) as totalPoints\n" +
+                                    "from user as A inner join response as B\n" +
+                                    "on A.userId = B.userId\n" +
+                                    "Where sessionId = ?\n" +
+                                    "group by fullname\n" +
+                                    "Order by totalPoints desc;";
+                
+                statement = connection.prepareStatement(sqlSelect);
+                statement.setInt(1,sessionInProgress);
+                resultset = statement.executeQuery();
+                
+                while(resultset.next()){
+                        
+                        ScoreboardLine line = new ScoreboardLine();
+                        
+                        line.setFullname(resultset.getString("fullname"));
+                        line.setTotalPoints(resultset.getInt("totalPoints"));
+
+                        scoreboard.add(line);
+                    }
+                
+                
             
-            session.setAttribute("sessionInProgress", null);
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(SearchSessionsServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,6 +123,8 @@ public class EndSessionServlet extends HttpServlet{
                 }
             }
             
+            session.setAttribute("scoreboard", scoreboard);
+            session.setAttribute("sessionInProgress", null);
             response.sendRedirect(this.getServletContext().getContextPath() + "/endOfSession.jsp");
 
         }
