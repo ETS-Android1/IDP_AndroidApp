@@ -201,6 +201,6 @@ INSERT INTO `response` (`userId`, `qnId`, `sessionId`, `choice`)
                   (3,3,1,'C'),
                   (4,3,1,'A'),
                   (5,3,1,'B'),
-                  (6,3,1,'A'),;
+                  (6,3,1,'A');
 /*!40000 ALTER TABLE `response` ENABLE KEYS */;
 UNLOCK TABLES;
