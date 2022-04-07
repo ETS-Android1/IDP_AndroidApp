@@ -41,6 +41,7 @@ public class OptionsActivity extends AppCompatActivity {
     int sessionPin;
     int qnNum;
     int qnId;
+    int ttlQns;
     String username;
     Boolean isActive = true;
 
@@ -56,6 +57,7 @@ public class OptionsActivity extends AppCompatActivity {
         sessionId = Integer.valueOf(intent.getStringExtra("SessionId"));
         qnNum = Integer.valueOf(intent.getStringExtra("qnNumber"));
         sessionPin = Integer.valueOf(intent.getStringExtra("SessionPin"));
+        ttlQns = Integer.valueOf(intent.getStringExtra("ttlQns"));
 
         username_TB = (TextView) findViewById(R.id.username_TB);
         username_TB.setText(username);
@@ -107,6 +109,7 @@ public class OptionsActivity extends AppCompatActivity {
             extras.putString("qnNum", String.valueOf(qnNum));
             extras.putString("SessionId", String.valueOf(sessionId));
             extras.putString("SessionPin", String.valueOf(sessionPin));
+            extras.putString("ttlQns", String.valueOf(ttlQns));
 
             intent.putExtras(extras);
             startActivity(intent);

@@ -28,6 +28,7 @@ public class ResultsActivity extends AppCompatActivity {
     int sessionPin;
     int qnNum;
     int qnId;
+    int ttlQns;
     String username;
     Boolean isActive = true;
 
@@ -43,6 +44,7 @@ public class ResultsActivity extends AppCompatActivity {
         sessionId = Integer.valueOf(intent.getStringExtra("SessionId"));
         qnNum = Integer.valueOf(intent.getStringExtra("qnNumber"));
         sessionPin = Integer.valueOf(intent.getStringExtra("SessionPin"));
+        ttlQns = Integer.valueOf(intent.getStringExtra("ttlQns"));
 
         usernameResults_TB = (TextView) findViewById(R.id.usernameResults_TB);
         usernameResults_TB.setText(username);
@@ -57,7 +59,9 @@ public class ResultsActivity extends AppCompatActivity {
         try {
             //retrieve question from db
             QuestionContent = Services.questionAvailability(sessionId, qnNum);
-            QuestionContentNext = Services.questionAvailability(sessionId, qnNum+1);
+            if(qnNum != ttlQns+1){
+                QuestionContentNext = Services.questionAvailability(sessionId, qnNum+1);
+            }
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -79,20 +83,34 @@ public class ResultsActivity extends AppCompatActivity {
             }
             pointsTxt_TB.setText("You earn " + ResponseContent.points + " points");
         }
-        if (QuestionContentNext.accessible == 0){
+        if(qnNum != ttlQns+1){
+            if (QuestionContentNext.accessible == 0){
+                isActive = false;
+
+                Intent intent = new Intent(ResultsActivity.this,OptionsActivity.class);
+                Bundle extras= new Bundle();
+                extras.putString("username",username);
+                extras.putString("userId", String.valueOf(userId));
+                extras.putString("qnNumber", String.valueOf(qnNum));
+                extras.putString("SessionId", String.valueOf(sessionId));
+                extras.putString("SessionPin", String.valueOf(sessionPin));
+
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        }
+        if(qnNum == ttlQns+1) {
             isActive = false;
 
-            Intent intent = new Intent(ResultsActivity.this,OptionsActivity.class);
+            Intent intent = new Intent(ResultsActivity.this,MainActivity.class);
             Bundle extras= new Bundle();
             extras.putString("username",username);
             extras.putString("userId", String.valueOf(userId));
-            extras.putString("qnNumber", String.valueOf(qnNum));
-            extras.putString("SessionId", String.valueOf(sessionId));
-            extras.putString("SessionPin", String.valueOf(sessionPin));
 
             intent.putExtras(extras);
             startActivity(intent);
         }
+
 
 
         if (isActive){

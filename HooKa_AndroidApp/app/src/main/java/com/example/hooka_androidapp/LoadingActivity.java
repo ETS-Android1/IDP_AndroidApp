@@ -85,8 +85,9 @@ public class LoadingActivity extends AppCompatActivity {
             try {
                 //retrieve question from db
                 QuestionContent = Services.questionAvailability(sessionId, qnNum);
-                QuestionContentCurrent = Services.questionAvailability(sessionId, qnNum-1);
-
+                if(qnNum != 1){
+                    QuestionContentCurrent = Services.questionAvailability(sessionId, qnNum-1);
+                }
             } catch (Exception e) {
                 Log.d(TAG, e.getMessage());
             }
@@ -99,22 +100,34 @@ public class LoadingActivity extends AppCompatActivity {
                 extras.putString("qnNumber", String.valueOf(qnNum));
                 extras.putString("SessionId", String.valueOf(sessionId));
                 extras.putString("SessionPin", String.valueOf(sessionPin));
+                extras.putString("ttlQns", String.valueOf(SessionContent.totalQns));
 
                 intent.putExtras(extras);
                 startActivity(intent);
             }
-            else if (QuestionContentCurrent.accessible == 1) { //Show results of qn
-                isActive = false;
-                Intent intent = new Intent(LoadingActivity.this,ResultsActivity.class);
-                Bundle extras= new Bundle();
-                extras.putString("username",username);
-                extras.putString("userId", String.valueOf(userId));
-                extras.putString("qnNumber", String.valueOf(qnNum-1));
-                extras.putString("SessionId", String.valueOf(sessionId));
-                extras.putString("SessionPin", String.valueOf(sessionPin));
+            else { //Next Question still not accessible
+                if (previousPage.equals("SessionJoin")) {
+                    loadingTxt.setText("Entered session " + sessionPin + "!\nWaiting for more students to join..");
+                }
+                else {
+                    loadingTxt.setText("You're fast! \nWaiting for question results :D");
+                }
+            }
+            if (qnNum != 1) { //Show results of qn
+                if(QuestionContentCurrent.accessible == 1) {
+                    isActive = false;
+                    Intent intent = new Intent(LoadingActivity.this,ResultsActivity.class);
+                    Bundle extras= new Bundle();
+                    extras.putString("username",username);
+                    extras.putString("userId", String.valueOf(userId));
+                    extras.putString("qnNumber", String.valueOf(qnNum-1));
+                    extras.putString("SessionId", String.valueOf(sessionId));
+                    extras.putString("SessionPin", String.valueOf(sessionPin));
+                    extras.putString("ttlQns", String.valueOf(SessionContent.totalQns));
 
-                intent.putExtras(extras);
-                startActivity(intent);
+                    intent.putExtras(extras);
+                    startActivity(intent);
+                }
             }
             else { //Next Question still not accessible
                 if (previousPage.equals("SessionJoin")) {
