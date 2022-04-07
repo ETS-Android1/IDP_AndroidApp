@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     extras.putString("userId", String.valueOf(UserContent.userId));
                     extras.putString("sessionPin",sessionPinTxt.getText().toString());
                     extras.putString("previousPage", "SessionJoin");
-                    extras.putString("qnNum", "1");
+                    extras.putString("qnNum", "0");
                     intent.putExtras(extras);
 
                     startActivity(intent);

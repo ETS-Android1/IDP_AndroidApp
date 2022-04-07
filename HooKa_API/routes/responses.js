@@ -85,12 +85,30 @@ router.post('/userQuestionResponse', function(req, res, next) {
         let responseData = null
         responseData = data[0]
 
-        res.status(200).json({
-        status: "success",
-        length: data?.length,
-        responseData: responseData,
-        });
-    })
+        sql = `select * from questions where qnId = ${qnId}`
+
+        connection.query(sql, (err, data, fields) => {
+        if (err) throw err
+        
+            correctAnswer = data[0].answer
+
+            let points = 0
+            if(choice==correctAnswer){
+                points = 10
+            }
+
+            sql = `update response set points = ${points} where qnId = ${qnId} and userId = ${userId} and sessionId = ${sessionId}`
+
+            connection.query(sql, (err, data, fields) => {
+                if (err) throw err
+                
+                res.status(200).json({
+                    status: "success",
+                    length: data?.length,
+                });
+            })
+        })
+    });
 });
 
   module.exports = router;

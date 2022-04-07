@@ -23,6 +23,8 @@ public class LoadingActivity extends AppCompatActivity {
     private TextView usernameTB;
     Session SessionContent = null;
     Question QuestionContent = null;
+    Question QuestionContentCurrent = null;
+
     int userId;
     int sessionPin;
     int sessionId;
@@ -45,7 +47,7 @@ public class LoadingActivity extends AppCompatActivity {
         userId =  Integer.valueOf(intent.getStringExtra("userId"));
         sessionPin = Integer.valueOf(intent.getStringExtra("sessionPin"));
         previousPage = intent.getStringExtra("previousPage");
-        qnNum = Integer.valueOf(intent.getStringExtra("qnNum"));
+        qnNum = Integer.valueOf(intent.getStringExtra("qnNum")) + 1;
 
         usernameTB = (TextView) findViewById(R.id.usernameTB);
         usernameTB.setText(username);
@@ -83,6 +85,7 @@ public class LoadingActivity extends AppCompatActivity {
             try {
                 //retrieve question from db
                 QuestionContent = Services.questionAvailability(sessionId, qnNum);
+                QuestionContentCurrent = Services.questionAvailability(sessionId, qnNum-1);
 
             } catch (Exception e) {
                 Log.d(TAG, e.getMessage());
@@ -94,6 +97,19 @@ public class LoadingActivity extends AppCompatActivity {
                 extras.putString("username",username);
                 extras.putString("userId", String.valueOf(userId));
                 extras.putString("qnNumber", String.valueOf(qnNum));
+                extras.putString("SessionId", String.valueOf(sessionId));
+                extras.putString("SessionPin", String.valueOf(sessionPin));
+
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+            else if (QuestionContentCurrent.accessible == 1) { //Show results of qn
+                isActive = false;
+                Intent intent = new Intent(LoadingActivity.this,ResultsActivity.class);
+                Bundle extras= new Bundle();
+                extras.putString("username",username);
+                extras.putString("userId", String.valueOf(userId));
+                extras.putString("qnNumber", String.valueOf(qnNum-1));
                 extras.putString("SessionId", String.valueOf(sessionId));
                 extras.putString("SessionPin", String.valueOf(sessionPin));
 

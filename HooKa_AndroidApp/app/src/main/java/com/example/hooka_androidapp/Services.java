@@ -269,6 +269,35 @@ public class Services {
         }
     }
 
+    public static Responses responseData(int qnId, int userId, int sessionId) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("qnId", qnId);
+            objectMap.put("userId", userId);
+            objectMap.put("sessionId", sessionId);
+            String body = mapper.writeValueAsString(objectMap);
+            String apiPath = "responses/userQuestionResponse";
+            String result = callPost(apiPath, body);
+
+            Map<String,Object> map = mapper.readValue(result, Map.class);
+            String status = map.get("status").toString();
+
+            if (!status.equals("success"))
+                return null;
+
+            String userJson = mapper.writeValueAsString(map.get("responseData"));
+            Responses responsesData = mapper.readValue(userJson, new TypeReference<Responses>(){});
+            return responsesData;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /* -------------------------------------BASE FUNCTIONS------------------------------------- */
 
     // this is the base function to call the GET API based on path

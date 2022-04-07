@@ -92,8 +92,24 @@ public class OptionsActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
+        //Not workable 
         if (QuestionContent.accessible != 0) { //Question not accessible
-            linker();
+            isActive = false;
+            /*
+            String temp = "";
+            temp += "Question not accessible";
+            Toast.makeText(getApplicationContext(), temp, Toast.LENGTH_SHORT).show();*/
+
+            Intent intent = new Intent(OptionsActivity.this,ResultsActivity.class);
+            Bundle extras= new Bundle();
+            extras.putString("username",username);
+            extras.putString("userId", String.valueOf(userId));
+            extras.putString("qnNum", String.valueOf(qnNum));
+            extras.putString("SessionId", String.valueOf(sessionId));
+            extras.putString("SessionPin", String.valueOf(sessionPin));
+
+            intent.putExtras(extras);
+            startActivity(intent);
         }
         else{
             qnId = QuestionContent.qnId;
@@ -132,6 +148,7 @@ public class OptionsActivity extends AppCompatActivity {
         optionA.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v) {
+                isActive = false;
                 try {
                     //retrieve question from db
                     ResponseContentA = Services.userResponse(qnId, userId, sessionId, "A");
@@ -157,6 +174,7 @@ public class OptionsActivity extends AppCompatActivity {
         optionB.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v) {
+                isActive = false;
                 try {
                     //retrieve question from db
                     ResponseContentB = Services.userResponse(qnId, userId, sessionId, "B");
@@ -172,6 +190,7 @@ public class OptionsActivity extends AppCompatActivity {
         optionC.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v) {
+                isActive = false;
                 try {
                     //retrieve question from db
                     ResponseContentC = Services.userResponse(qnId, userId, sessionId, "C");
@@ -187,6 +206,7 @@ public class OptionsActivity extends AppCompatActivity {
         optionD.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v) {
+                isActive = false;
                 try {
                     //retrieve question from db
                     ResponseContentD = Services.userResponse(qnId, userId, sessionId, "D");
@@ -199,7 +219,7 @@ public class OptionsActivity extends AppCompatActivity {
         });
 
         if (isActive){
-            refresh(1000); //2 seconds
+            refresh(1000); //1 seconds
         }
     }
 
@@ -218,16 +238,17 @@ public class OptionsActivity extends AppCompatActivity {
 
     private void linker() {
         isActive = false;
-        qnNum += 1;
-        Intent intent = new Intent(OptionsActivity.this,ResultsActivity.class);
+
+        Intent intent = new Intent(OptionsActivity.this,LoadingActivity.class);
+
         Bundle extras= new Bundle();
         extras.putString("username",username);
         extras.putString("userId", String.valueOf(userId));
-        extras.putString("qnNumber", String.valueOf(qnNum));
-        extras.putString("SessionId", String.valueOf(sessionId));
-        extras.putString("SessionPin", String.valueOf(sessionPin));
-
+        extras.putString("sessionPin",String.valueOf(sessionPin));
+        extras.putString("previousPage", "OptionActivity");
+        extras.putString("qnNum", String.valueOf(qnNum));
         intent.putExtras(extras);
+
         startActivity(intent);
     }
 }
